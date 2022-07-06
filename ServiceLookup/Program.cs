@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ServiceLookup.DAL;
+using ServiceLookup.DAL.Interfaces;
+using ServiceLookup.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 
 var app = builder.Build();
 
@@ -29,6 +33,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Search}/{action=GetServices}/{id?}");
 
 app.Run();

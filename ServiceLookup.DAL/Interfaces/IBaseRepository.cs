@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL.Interfaces
 {
-    internal interface IBaseRepository<T> where T : class
+    public interface IBaseRepository<T> where T : class
     {
-        bool Create(T entity);
-        T GetT(int id);
-        IEnumerable<T> Select();
-        bool Delete(T entity);
+        Task<bool> Create(T entity);
+        Task<T> Get(int id);
+        Task<List<T>> GetAll();
+        Task<bool> Delete(T entity);
 
     }
 }

@@ -1,0 +1,15 @@
+﻿@using ServiceLookup.DAL.Entity;
+@Model List<Service>
+    @{
+        ViewBag.Title = "Услуги";
+        Layout = "_Layout";
+    }
+
+    <table>
+        <tr><th>Id</th><th>Title</th><th>Info</th></tr>
+
+        @foreach (var service in Model)
+        {
+            <tr><td>@service.Id</td><td>@service.Title</td><td>@service.Info</td></tr>
+        }
+    </table>

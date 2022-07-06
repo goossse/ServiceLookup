@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceLookup.Models;
 using System.Diagnostics;
+using ServiceLookup.DAL.Interfaces;
+using ServiceLookup.DAL;
 
 namespace ServiceLookup.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -15,9 +17,10 @@ namespace ServiceLookup.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
-
+         
         public IActionResult Privacy()
         {
             return View();

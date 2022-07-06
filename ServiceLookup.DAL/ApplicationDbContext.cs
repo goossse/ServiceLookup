@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ServiceLookup.Domain.Entity;
+using ServiceLookup.DAL.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
