@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ServiceLookup.BL\ServiceLookup.BL.csproj" />
     <ProjectReference Include="..\ServiceLookup.DAL\ServiceLookup.DAL.csproj" />
   </ItemGroup>
 

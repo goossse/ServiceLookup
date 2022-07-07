@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ServiceLookup.DAL;
+using ServiceLookup.DAL.Entity;
 using ServiceLookup.DAL.Interfaces;
 using ServiceLookup.DAL.Repositories;
 
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 //DB connection
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
+/*builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();*/
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -29,6 +33,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

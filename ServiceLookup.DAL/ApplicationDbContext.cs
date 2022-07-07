@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL
 {
-    public class ApplicationDbContext : DbContext /*IdentityDbContext<User>*/
+    public class ApplicationDbContext : DbContext /*: IdentityDbContext<User>*/
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -22,7 +22,7 @@ namespace ServiceLookup.DAL
 
         }
 
-        public DbSet<User> Users { get; set; } = null!;
+        /*public DbSet<User> Users { get; set; } = null!;*/
         public DbSet<Condition> Conditions { get; set; } = null!;
         public DbSet<Price> Prices { get; set; } = null!;
         public DbSet<Request> Requests { get; set; } = null!;

@@ -16,7 +16,7 @@ namespace ServiceLookup.DAL.Interfaces
         IBaseRepository<ReviewCriteria> ReviewCriterias { get; }
         IBaseRepository<Service> Services { get; }
         IBaseRepository<ServiceType> ServiceTypes { get; }
-        IBaseRepository<User> Users { get; }
+        /*IBaseRepository<User> Users { get; }*/
         void Save();
         void Dispose (bool disposing);
         void Dispose();
