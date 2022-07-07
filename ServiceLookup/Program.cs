@@ -12,7 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+/*builder.Services.AddScoped<IServiceRepository, ServiceRepository>();*/
 
 var app = builder.Build();
 

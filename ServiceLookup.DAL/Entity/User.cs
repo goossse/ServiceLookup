@@ -1,4 +1,4 @@
-﻿using ServiceLookup.DAL.Entity.Base;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL.Entity
 {
-    public class User : BaseClass
+    public class User /*: IdentityUser*/
     {
+        [Required]
+        public int Id { get; set; }
         [Required]
         [StringLength(30, MinimumLength = 2)]
         public string? Name { get; set; }

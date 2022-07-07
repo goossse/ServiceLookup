@@ -1,5 +1,4 @@
-﻿using ServiceLookup.DAL.Entity.Base;
-using ServiceLookup.DAL.Validator;
+﻿using ServiceLookup.DAL.Validator;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL.Entity
 {
-    public class Price : BaseClass
+    public class Price
     {
+        [Required]
+        public int Id { get; set; }
         [Valute]
         public string? Currency { get; set; }
 
@@ -18,7 +19,7 @@ namespace ServiceLookup.DAL.Entity
         public int Value { get; set; }
 
         [Required]
-        public int? ServiceId { get; set; }
+        public int ServiceId { get; set; }
         public Service? Service { get; set; }
     }
 }

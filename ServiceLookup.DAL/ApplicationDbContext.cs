@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ServiceLookup.DAL.Entity;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,17 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext /*IdentityDbContext<User>*/
     {
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             Database.EnsureCreated();
+        }
+        public ApplicationDbContext()
+        {
+            Database.EnsureCreated();
+
         }
 
         public DbSet<User> Users { get; set; } = null!;

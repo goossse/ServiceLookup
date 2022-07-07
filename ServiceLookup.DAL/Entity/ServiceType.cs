@@ -1,5 +1,4 @@
-﻿using ServiceLookup.DAL.Entity.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL.Entity
 {
-    public class ServiceType : BaseClass
+    public class ServiceType
     {
+        [Required]
+        public int Id { get; set; }
         [StringLength(30, MinimumLength = 2)]
         public string? Name { get; set; }
         public List<Service>? Services { get; set; }

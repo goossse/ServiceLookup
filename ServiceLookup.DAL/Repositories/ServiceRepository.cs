@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL.Repositories
 {
-    public class ServiceRepository : IServiceRepository
+    public class ServiceRepository /*: IServiceRepository*/
 
     {
         private readonly ApplicationDbContext db;
