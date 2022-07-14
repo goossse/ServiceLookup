@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ServiceLookup.BL.DTO;
-using ServiceLookup.Models.ViewModels;
+using ServiceLookup.Models.ManageVM;
 
 namespace ServiceLookup.Mapper
 {
