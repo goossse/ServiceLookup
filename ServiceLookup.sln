@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceLookup.DAL", "Servic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BL", "BL", "{39A0A977-020F-48F9-A87F-CE2FD5231C0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLookup.BL", "ServiceLookup.BL\ServiceLookup.BL.csproj", "{EB3D8A38-9A90-473A-B8E8-5DF344141621}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceLookup.BL", "ServiceLookup.BL\ServiceLookup.BL.csproj", "{EB3D8A38-9A90-473A-B8E8-5DF344141621}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceLookup", "ServiceLookup\ServiceLookup.csproj", "{999F8C5F-A661-47B1-8CBD-C9B44CAC08AA}"
 EndProject

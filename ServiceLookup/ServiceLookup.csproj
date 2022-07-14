@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ServiceLookup.DAL\ServiceLookup.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Moder\" />
+  </ItemGroup>
+
 </Project>

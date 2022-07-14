@@ -1,0 +1,22 @@
+﻿@model ServiceLookup.Models.ViewModels.CreateServiceViewModel
+
+<h2>Создание услуги</h2>
+<form method="post" asp-controller="Manage" asp-action="Create" enctype="multipart/form-data">
+    <div>
+        <label asp-for="Title"></label><br />
+        <input asp-for="Title" />
+        <span asp-validation-for="Title"></span>
+    </div>
+    <div>
+        <label asp-for="Info"></label><br />
+        <input asp-for="Info" />
+        <span asp-validation-for="Info"></span>
+    </div>
+    <div>
+        <label asp-for="Image"></label><br />
+        <input asp-for="Image" type="file" class="form-control"/><br>
+    </div>
+    <div>
+        <input type="submit" value="Создать" />
+    </div>
+</form>

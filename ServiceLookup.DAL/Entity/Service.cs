@@ -18,8 +18,9 @@ namespace ServiceLookup.DAL.Entity
         [Required]
         [StringLength(2000, MinimumLength = 2)]
         public string? Info { get; set; }
+        public string? Image { get; set; }
 
-        public int? UserId { get; set; }
+        public Guid? UserId { get; set; }
         public User? User { get; set; }
         public List<ServiceType>? Types { get; set; }
         public List<Request>? Requests { get; set; }

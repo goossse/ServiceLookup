@@ -10,13 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 //DB connection
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
-/*builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();*/
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-/*builder.Services.AddScoped<IServiceRepository, ServiceRepository>();*/
 
 var app = builder.Build();
 
@@ -38,6 +37,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Search}/{action=GetServices}/{id?}");
+    pattern: "{controller=Manage}/{action=Create}/{id?}");
 
 app.Run();

@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL.Entity
 {
-    public class User /*: IdentityUser*/
+    public class User : IdentityUser
     {
-        [Required]
-        public int Id { get; set; }
+/*        [Required]
+        public int Id { get; set; }*/
         [Required]
         [StringLength(30, MinimumLength = 2)]
         public string? Name { get; set; }
@@ -24,7 +24,7 @@ namespace ServiceLookup.DAL.Entity
         [Range(typeof(DateTime), "01-01-1950", "01-01-2004")]
         public DateTime DateOfBirth { get; set; }
 
-        [Required]
+        
         [StringLength(50)]
         public string? ContactDetails { get; set; }
 

@@ -1,0 +1,36 @@
+﻿@using ServiceLookup.DAL.Entity
+@model User
+@{
+    ViewBag.Title = "Редактирование пользователя";
+}
+<form asp-action="EditUser" asp-controller="Admin">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div>
+        <label asp-for="Name"></label><br />
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Surname"></label><br />
+        <input asp-for="Surname" />
+        <span asp-validation-for="Surname"></span>
+    </div>
+    <div>
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label asp-for="UserName"></label><br />
+        <input asp-for="UserName" />
+        <span asp-validation-for="UserName"></span>
+    </div>
+    <div>
+        <label asp-for="DateOfBirth"></label><br />
+        <input asp-for="DateOfBirth" />
+        <span asp-validation-for="DateOfBirth"></span>
+    </div>
+    <div>
+        <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
+    </div>
+</form>

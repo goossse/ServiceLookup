@@ -20,7 +20,7 @@ namespace ServiceLookup.BL.Mapper
             CreateMap<Review, ReviewDTO>().ReverseMap();
             CreateMap<Service, ServiceDTO>().ReverseMap();
             CreateMap<ServiceType, ServiceTypeDTO>().ReverseMap();
-            CreateMap<User, UserDTO>().ReverseMap(); // ne nado budet
+            /*CreateMap<User, UserDTO>().ReverseMap(); // ne nado budet*/
             // servisy dlya vseh krome identity N
         }
     }

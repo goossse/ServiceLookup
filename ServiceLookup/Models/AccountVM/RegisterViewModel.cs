@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ServiceLookup.Models.IdentityVM
+namespace ServiceLookup.Models.AccountVM
 {
     public class RegisterViewModel
     {
@@ -10,11 +10,14 @@ namespace ServiceLookup.Models.IdentityVM
 
         [Required]
         [Display(Name = "Фамилия")]
-                public string Surname { get; set; }
+        public string Surname { get; set; }
 
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        [Required]
+        [Display(Name = "Login")]
+        public string UserName { get; set; }
 
         [Required]
         [Display(Name = "Год рождения")]

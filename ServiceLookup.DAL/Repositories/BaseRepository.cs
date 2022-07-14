@@ -31,15 +31,17 @@ namespace ServiceLookup.DAL.Repositories
 
         public T FindById(int id)
         {
-            return dbSet.Find(id);
+            var item = dbSet.Find(id);
+            return item;
+
         }
 
-/*        public Task<T> FindByIdAsync(int id)
-        {
-            var item = dbSet.FindAsync(id);
-            db.Entry(item).State = EntityState.Detached;
-            return item;
-        }*/
+        /*        public Task<T> FindByIdAsync(int id)
+                {
+                    var item = dbSet.FindAsync(id);
+                    db.Entry(item).State = EntityState.Detached;
+                    return item;
+                }*/
 
         public IEnumerable<T> Get()
         {
