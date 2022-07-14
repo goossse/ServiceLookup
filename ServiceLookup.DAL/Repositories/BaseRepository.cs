@@ -29,35 +29,27 @@ namespace ServiceLookup.DAL.Repositories
             db.SaveChanges();
         }
 
-        public T FindById(int id)
+        public async Task<T> FindById(int id)
         {
-            var item = dbSet.Find(id);
-            return item;
-
+            return await dbSet.FindAsync(id);
         }
 
-        /*        public Task<T> FindByIdAsync(int id)
-                {
-                    var item = dbSet.FindAsync(id);
-                    db.Entry(item).State = EntityState.Detached;
-                    return item;
-                }*/
-
-        public IEnumerable<T> Get()
+        public async Task<IEnumerable<T>> Get()
         {
-            return dbSet.AsNoTracking().ToList();
+            return await dbSet.ToListAsync();
         }
 
-        public void Remove(T item)
+        public async Task Remove(int id)
         {
+            var item = await dbSet.FindAsync(id);
             dbSet.Remove(item);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
-        public void Update(T item)
+        public async Task Update(T item)
         {
             dbSet.Update(item);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
     }
 }

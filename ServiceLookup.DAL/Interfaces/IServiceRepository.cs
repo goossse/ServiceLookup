@@ -10,5 +10,6 @@ namespace ServiceLookup.DAL.Interfaces
     public interface IServiceRepository : IBaseRepository<Service>
     {
         Task<Service> GetByTitleAsync(string name);
+        Task<IEnumerable<Service>> GetByUser(int userId);
     }
 }

@@ -14,7 +14,7 @@ namespace ServiceLookup.BL.DTO
         public string? Info { get; set; }
         public string? Image { get; set; }
 
-        public Guid? UserId { get; set; }
+        public int? UserId { get; set; }
         public UserDTO? User { get; set; }
         public List<ServiceTypeDTO>? Types { get; set; }
         public List<RequestDTO>? Requests { get; set; }

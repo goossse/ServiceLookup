@@ -26,11 +26,22 @@ namespace ServiceLookup.BL.Services.Implementations
             });
             mapper = mappingConfig.CreateMapper();
         }
-        public IEnumerable<ServiceDTO> GetServices()
+
+        public async Task<IEnumerable<ServiceDTO>> GetServices()
         {
-            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.Get());
+            var list = mapper.Map<List<ServiceDTO>>(await unitOfWork.Services.Get());
             return list;
         }
 
+        public async Task<ServiceDTO> GetService(int id)
+        {
+            return mapper.Map<ServiceDTO>(await unitOfWork.Services.FindById(id));
+        }
+
+        public IEnumerable<ServiceDTO> GetUsersServices(int userId)
+        {
+            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetByUser(userId));
+            return list;
+        }
     }
 }

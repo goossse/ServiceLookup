@@ -1,48 +1,55 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using ServiceLookup.BL.DTO;
 using ServiceLookup.BL.Services.Implementations;
 using ServiceLookup.BL.Services.Interfaces;
 using ServiceLookup.DAL;
+using ServiceLookup.DAL.Entity;
 
 namespace ServiceLookup.Controllers
 {
     public class UserController : Controller
     {
         ILogger<UserController> logger;
-        /*public ApplicationDbContext db;*/
-        List<ServiceDTO> services;
         ISearch searchService;
-
-        public UserController(ILogger<UserController> _logger, ApplicationDbContext db)
+        IUser userService;
+        public UserController(ILogger<UserController> _logger, ApplicationDbContext db, UserManager<User> userManager)
         {
             logger = _logger;
             searchService = new SearchService(db);//?? не должны ли мы получить в конструкторе реализацию??
+            userService = new UserService(userManager);
         }
 
-        /*        public async Task<IActionResult> GetService(int id)
-                {
-                    if (id != 0)
-                    {
-
-                    }
-                }*/
-
+        [HttpGet]
         public IActionResult GetServices()
         {
-
-            /*            Service ser = new Service() { Title = "And Another One Massage", Info = "Just another one ordinary massage" };
-            */
             return View(searchService.GetServices());
         }
-        /*        public string UpdateService(int id, string title)
-                {
-                    var temp = unitOfWork.Services.FindById(id);
-                    temp.Title = title;
-                    unitOfWork.Services.Update(temp);
-                    return "OK";
-                }*/
 
+        [HttpGet]
+        public IActionResult GetService(int id)
+        {
+            return View(searchService.GetService(id));
+        }
 
+        [HttpGet]
+        public IActionResult GetUsersServices(int userId) //посмотреть ка происходит передача айди
+        {
+
+            return View(searchService.GetUsersServices(userId));
+        }
+
+        [HttpGet]
+        public IActionResult GetUsers()
+        {
+            return View(userService.GetUsers());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUser(int id)
+        {
+            return View(await userService.GetUserAsync(id));
+        }
         //Впихнуть в клиент если поделю на 2 контроллера
 /*        public IActionResult ChangePassword()
         {
@@ -51,3 +58,7 @@ namespace ServiceLookup.Controllers
         }*/
     }
 }
+// сделать онмодел креэйтинг
+// добавить средний рейтинг
+// изменить ключ у юзера
+// роли

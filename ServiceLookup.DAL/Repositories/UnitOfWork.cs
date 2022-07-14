@@ -21,7 +21,7 @@ namespace ServiceLookup.DAL.Repositories
 
         public IBaseRepository<ReviewCriteria> repositoryReviewCriterias;
 
-        public IBaseRepository<Service> repositoryServices;
+        public IServiceRepository repositoryServices;
 
         public IBaseRepository<ServiceType> repositoryServiceTypes;
 
@@ -81,12 +81,12 @@ namespace ServiceLookup.DAL.Repositories
                 return repositoryReviewCriterias;
             }
         }
-        public IBaseRepository<Service> Services
+        public IServiceRepository Services
         {
             get
             {
                 if (repositoryServices == null)
-                    repositoryServices = new BaseRepository<Service>(db);
+                    repositoryServices = new ServiceRepository(db);
                 return repositoryServices;
             }
         }

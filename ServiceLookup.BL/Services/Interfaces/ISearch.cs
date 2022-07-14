@@ -9,6 +9,9 @@ namespace ServiceLookup.BL.Services.Interfaces
 {
     public interface ISearch
     {
-        IEnumerable<ServiceDTO> GetServices();
+        public Task<IEnumerable<ServiceDTO>> GetServices();
+        public Task<ServiceDTO> GetService(int id);
+        public IEnumerable<ServiceDTO> GetUsersServices(int userId);
+
     }
 }

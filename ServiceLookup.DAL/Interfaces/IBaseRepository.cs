@@ -8,17 +8,11 @@ namespace ServiceLookup.DAL.Interfaces
 {
     public interface IBaseRepository<T> where T : class
     {
-/*        Task<bool> Create(T entity);
-        Task<T> Get(int id);
-        Task<List<T>> GetAll();
-        Task<bool> Delete(T entity);*/
-
         void Create(T entity);
-        T FindById(int id);
-        /*Task<T> FindByIdAsync(int id);*/
-        IEnumerable<T> Get();
-        void Remove(T item);
-        void Update(T item);
+        Task<T> FindById(int id);
+        Task<IEnumerable<T>> Get();
+        Task Remove(int id);
+        Task Update(T item);
 
     }
 }

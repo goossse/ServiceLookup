@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL.Repositories
 {
-    public class ServiceRepository /*: IServiceRepository*/
+    public class ServiceRepository : IServiceRepository
 
     {
         private readonly ApplicationDbContext db;
@@ -17,23 +17,21 @@ namespace ServiceLookup.DAL.Repositories
         {
             db = _db;
         }
-        public async Task<bool> Create(Service entity)
+
+        public void Create(Service item)
         {
-            db.Services.Add(entity);
-            await db.SaveChangesAsync();
-            return true;
+            db.Services.Add(item);
+            db.SaveChanges();
         }
 
-        public async Task<bool> Delete(Service entity)
+        public async Task<Service> FindById(int id)
         {
-            db.Services.Remove(entity);
-            await db.SaveChangesAsync();
-            return true;
+            return await db.Services.FindAsync(id);
         }
 
-        public async Task<Service> Get(int id)
+        public async Task<IEnumerable<Service>> Get()
         {
-           return await db.Services.FirstOrDefaultAsync(s => s.Id == id);
+            return await db.Services.ToListAsync();
         }
 
         public async Task<Service> GetByTitleAsync(string title)
@@ -41,9 +39,22 @@ namespace ServiceLookup.DAL.Repositories
             return await db.Services.FirstOrDefaultAsync(s => s.Title == title);
         }
 
-        public Task<List<Service>> GetAll()
+        public async Task<IEnumerable<Service>> GetByUser(int userId)
         {
-            return db.Services.ToListAsync();
+            return await db.Services.Where(s=> s.UserId == userId).ToListAsync();
+        }
+
+        public async Task Remove(int id)
+        {
+            var item = await db.Services.FindAsync(id);
+            db.Services.Remove(item);
+            await db.SaveChangesAsync();
+        }
+
+        public async Task Update(Service item)
+        {
+            db.Services.Update(item);
+            await db.SaveChangesAsync();
         }
     }
 }

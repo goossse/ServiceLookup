@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Moder\" />
+    <Folder Include="Views\User\Partial\" />
   </ItemGroup>
 
 </Project>
