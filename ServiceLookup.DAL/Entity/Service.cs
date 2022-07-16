@@ -20,7 +20,7 @@ namespace ServiceLookup.DAL.Entity
         public string? Info { get; set; }
         public string? Image { get; set; }
         public double? AverageRate { get; set; }
-
+        public DateTime DateOfCreating { get; set; }
         public int? UserId { get; set; }
         public User? User { get; set; }
         public List<ServiceType>? Types { get; set; }

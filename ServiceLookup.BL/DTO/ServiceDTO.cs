@@ -14,8 +14,10 @@ namespace ServiceLookup.BL.DTO
         public string? Info { get; set; }
         public string? Image { get; set; }
         public double? AverageRate { get; set; }
+        public DateTime DateOfCreating { get; set; }
         public int? UserId { get; set; }
         public UserDTO? User { get; set; }
+
         public List<ServiceTypeDTO>? Types { get; set; }
         public List<RequestDTO>? Requests { get; set; }
         public List<PriceDTO>? PriceList { get; set; }

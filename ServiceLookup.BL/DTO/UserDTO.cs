@@ -11,14 +11,13 @@ namespace ServiceLookup.BL.DTO
     {
 
         public string? Name { get; set; }
-
         public string? Surname { get; set; }
-
         public DateTime DateOfBirth { get; set; }
-
         public string? ContactDetails { get; set; }
-
         public double? AverageRate { get; set; }
+        public string? Image { get; set; }
+        public DateTime DateOfRegistration { get; set; }
+        public string? ShortDescription { get; set; }
 
         public List<RequestDTO>? Requests { get; set; }
         public List<ServiceDTO>? Services { get; set; }

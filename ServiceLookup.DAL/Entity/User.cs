@@ -18,7 +18,9 @@ namespace ServiceLookup.DAL.Entity
         [StringLength(30, MinimumLength = 2)]
         public string? Surname { get; set; }
         public double? AverageRate { get; set; }
-
+        public string? Image { get; set; }
+        public DateTime DateOfRegistration { get; set; }
+        public string? ShortDescription { get; set; }
 
         [Required]
         [Range(typeof(DateTime), "01-01-1950", "01-01-2004")]
