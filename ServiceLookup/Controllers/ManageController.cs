@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLookup.BL.DTO;
@@ -11,14 +12,14 @@ using ServiceLookup.Models.ManageVM;
 
 namespace ServiceLookup.Controllers
 {
+    [Authorize]
     public class ManageController : Controller
     {
         private readonly IService serviceService;
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
-        private readonly IWebHostEnvironment webHost;
 
-        public ManageController(UserManager<User> _userManager, ApplicationDbContext db, IWebHostEnvironment _webHost)
+        public ManageController(UserManager<User> _userManager, ApplicationDbContext db)
         {
             serviceService = new ServiceService(db);
             userManager = _userManager;
@@ -27,35 +28,35 @@ namespace ServiceLookup.Controllers
                 mc.AddProfile(new AutoMapperView());
             });
             mapper = mappingConfig.CreateMapper();
-            webHost = _webHost;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateServiceViewModel _service)
         {
-            /*var userId = (await userManager.GetUserId);*/
-            var serv = new ServiceDTO() { Title = _service.Title, Info = _service.Info };
+            var userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
+            var serv = new ServiceDTO() { Title = _service.Title, Info = _service.Info, UserId = userId };
             if (_service.Image != null)
-            {
-                string path = "/images/" + _service.Image?.FileName;
-                using (var fileStream = new FileStream(webHost.WebRootPath + path, FileMode.Create))
-                {
-                    await _service.Image.CopyToAsync(fileStream);
-                }
-                serv.Image = path;
-            }
-
-            /*serv.UserId = Guid(userId);*/
+                serv.Image = SaveImage(_service.Image);
             bool check = serviceService.CreateService(serv);
             return Redirect("~/User/GetServices");
+        }
+
+        [NonAction]
+        public string SaveImage(IFormFile image)
+        {
+            string webRootPath = @"C:\Ucheba\nix\ServiceLookup\ServiceLookup\wwwroot\";
+            string path = "/images/" + image.FileName;
+            using (var fileStream = new FileStream(webRootPath + path, FileMode.Create))
+            {
+                image.CopyToAsync(fileStream);
+            }
+            return path;
         }
     }
 }

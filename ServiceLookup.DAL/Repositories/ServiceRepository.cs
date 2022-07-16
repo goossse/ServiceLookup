@@ -29,6 +29,11 @@ namespace ServiceLookup.DAL.Repositories
             return await db.Services.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Service>> FindByTitleAsync(string text)
+        {
+            return await db.Services.Where(s => s.Title.Contains(text)).ToListAsync();
+        }
+
         public async Task<IEnumerable<Service>> Get()
         {
             return await db.Services.ToListAsync();

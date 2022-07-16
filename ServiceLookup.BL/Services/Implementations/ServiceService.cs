@@ -36,8 +36,9 @@ namespace ServiceLookup.BL.Services.Implementations
         }
         public IEnumerable<ServiceDTO> MyServices(Guid userId)
         {
-            var List = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.Get());
-            return List.Where(s => s.UserId == userId);
+            /*            var List = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.Get());
+                        return List.Where(s => s.UserId == userId);*/
+            throw new NotImplementedException();
         }
     }
 

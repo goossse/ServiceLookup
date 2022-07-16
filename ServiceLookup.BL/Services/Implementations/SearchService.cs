@@ -43,5 +43,13 @@ namespace ServiceLookup.BL.Services.Implementations
             var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetByUser(userId));
             return list;
         }
+
+        public async Task<IEnumerable<ServiceDTO>> GetServicesByTitle(string text)
+        {
+            var list = mapper.Map<List<ServiceDTO>>(await unitOfWork.Services.FindByTitleAsync(text));
+            return list;
+        }
+
+
     }
 }

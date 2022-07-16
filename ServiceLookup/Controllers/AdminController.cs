@@ -7,7 +7,7 @@ namespace ServiceLookup.Controllers
 {
     public class AdminController : Controller
     {
-        UserManager<User> userManager;
+/*        UserManager<User> userManager;
         public AdminController(UserManager<User> _userManager)
         {
             userManager = _userManager;
@@ -66,6 +66,6 @@ namespace ServiceLookup.Controllers
                 }
             }
             return View(_user);
-        }
+        }*/
     }
 }

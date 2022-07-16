@@ -19,6 +19,7 @@ namespace ServiceLookup.DAL.Entity
         [StringLength(2000, MinimumLength = 2)]
         public string? Info { get; set; }
         public string? Image { get; set; }
+        public double? AverageRate { get; set; }
 
         public int? UserId { get; set; }
         public User? User { get; set; }

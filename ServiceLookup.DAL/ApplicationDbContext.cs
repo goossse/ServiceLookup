@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<User, Role, int>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

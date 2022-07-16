@@ -21,9 +21,9 @@ namespace ServiceLookup.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetServices()
+        public async Task<IActionResult> GetServices()
         {
-            return View(searchService.GetServices());
+            return View( await searchService.GetServices());
         }
 
         [HttpGet]
@@ -50,6 +50,11 @@ namespace ServiceLookup.Controllers
         {
             return View(await userService.GetUserAsync(id));
         }
+
+        public async Task<IActionResult> SearchByTitle(string text)
+        {
+            return View(await searchService.GetServicesByTitle(text));
+        }
         //Впихнуть в клиент если поделю на 2 контроллера
 /*        public IActionResult ChangePassword()
         {
@@ -58,7 +63,4 @@ namespace ServiceLookup.Controllers
         }*/
     }
 }
-// сделать онмодел креэйтинг
-// добавить средний рейтинг
-// изменить ключ у юзера
-// роли
+// сделать онмодел креэйтин (не надо??)

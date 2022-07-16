@@ -11,5 +11,6 @@ namespace ServiceLookup.DAL.Interfaces
     {
         Task<Service> GetByTitleAsync(string name);
         Task<IEnumerable<Service>> GetByUser(int userId);
+        Task<IEnumerable<Service>> FindByTitleAsync(string text);
     }
 }

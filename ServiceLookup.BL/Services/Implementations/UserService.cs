@@ -19,15 +19,20 @@ namespace ServiceLookup.BL.Services.Implementations
             userManager = _userManager;
         }
 
+        public Task<User> GetUserAsync(int id) // удалить
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<User> GetUsers()
         {
             return userManager.Users.ToList();
         }
 
-        public async Task<User> GetUserAsync(int id)
+/*        public async Task<User> GetUserAsync(int id)
         {
             User user = await userManager.GetUserAsync(int id); //поменять ключ для юзера
             return user;
-        }
+        }*/
     }
 }

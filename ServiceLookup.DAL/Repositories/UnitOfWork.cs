@@ -26,7 +26,7 @@ namespace ServiceLookup.DAL.Repositories
         public IBaseRepository<ServiceType> repositoryServiceTypes;
 
         public IBaseRepository<User> repositoryUsers;
-
+        public IBaseRepository<Role> repositoryRoles;
 
         public UnitOfWork()
         {
@@ -106,6 +106,16 @@ namespace ServiceLookup.DAL.Repositories
                 if (repositoryUsers == null)
                     repositoryUsers = new BaseRepository<User>(db);
                 return repositoryUsers;
+            }
+        }
+
+        public IBaseRepository<Role> Roles
+        {
+            get
+            {
+                if (repositoryRoles == null)
+                    repositoryRoles = new BaseRepository<Role>(db);
+                return repositoryRoles;
             }
         }
 

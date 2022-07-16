@@ -1,53 +1,8 @@
-﻿@using ServiceLookup.BL.DTO
-@model IEnumerable<ServiceDTO>
+﻿@using ServiceLookup.Models.UserVM
+@model UsersServicesViewModel
     @{
     ViewBag.Title = "Услуги";
     Layout = "_Layout";
 }
-
-<div class="album py-5 bg-light">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            @foreach (var service in Model)
-            {
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="bg-image hover-overlay ripple">
-                            @if (service.Image == null)
-                            {
-                                <img src="/images/icons/no_image.svg" class="img-fluid" style="width:20%">
-                            }
-                            else
-                            {
-                                <img src="@service.Image" class="img-fluid" style="width:100%">
-                            }
-                            <a href="#!">
-                                <div class="mask" style="background-color: rgba(57, 192, 237, 0.2);"></div>
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text" style="font-size: large;">@service.Title</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button"
-                                        class="btn btn-sm btn-outline-secondary">
-
-                                        Послуга
-
-                                    </button>
-                                    <button type="button"
-                                        class="btn btn-sm btn-outline-secondary">
-
-                                        Майстер
-
-                                    </button>
-                                </div>
-                                <small class="text-muted">Сьогодні, 17:43</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</div>
+<h2>Все услуги мастера <a href="/User/GetUsers/@Model.User.Id" class="stretched-link">@Model.User.Name</a></h2>
+@await Html.PartialAsync("/Views/User/Partial/ServicesPartial.cshtml", Model.Services)
