@@ -1,4 +1,5 @@
-﻿using ServiceLookup.DAL.Entity;
+﻿using ServiceLookup.BL.DTO;
+using ServiceLookup.DAL.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace ServiceLookup.BL.Services.Interfaces
 {
     public interface IUser
     {
-        public IEnumerable<User> GetUsers();
-        public Task<User> GetUserAsync(int id);
+        public Task<IEnumerable<UserDTO>> GetUsers();
+        public Task<UserDTO> GetUserAsync(int id);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ServiceLookup.BL.DTO;
 using ServiceLookup.Models.ManageVM;
+using ServiceLookup.Models.UserVM;
 
 namespace ServiceLookup.Mapper
 {
@@ -9,6 +10,7 @@ namespace ServiceLookup.Mapper
         public AutoMapperView()
         {
             /*CreateMap<CreateServiceViewModel, ServiceDTO>();*/
+            CreateMap<UsersViewModel, UserDTO>();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace ServiceLookup.Controllers
         {
             logger = _logger;
             searchService = new SearchService(db);//?? не должны ли мы получить в конструкторе реализацию??
-            userService = new UserService(userManager);
+            userService = new UserService(db);
         }
 
         [HttpGet]
@@ -40,9 +40,10 @@ namespace ServiceLookup.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
-            return View(userService.GetUsers());
+            //сделать через автомаппер
+            return View(await userService.GetUsers());
         }
 
         [HttpGet]

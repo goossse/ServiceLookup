@@ -1,0 +1,45 @@
+﻿@using ServiceLookup.BL.DTO;
+@model UserDTO
+
+<h4 class="text-center">Перегляд профілю</h4>
+<div class="container py-5 bg-light">
+    <div class="row px-4">
+        <div class="col-12 col-md-4">
+            <div class="row row-cols-1 g-3">
+                @if (Model.Image == null)
+                {
+                    <img class="img-fluid img-thumbnail" src="/images/massagist1.jpg">
+                }
+                else
+                {
+                    <img class="img-fluid img-thumbnail" src="@Model.Image">
+                }
+                <h5 class="text-center">@@@Model.UserName</h5>
+                <a href="/User/GetUserServices/@Model.Id" class="btn btn-outline-secondary py-2" style="width: 100%">Послуги користувача</a>
+                <a href="" class="btn btn-outline-secondary py-2" style="width: 100%">Відгуки користувача</a>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-8">
+            <div class="row row-cols-1 g-3 py-2">
+                <h5 class="text-center">@Model.Name @Model.Surname</h5>
+                <h5 class="text-center">@Model.ShortDescription</h5>
+                <dl class="row">
+                    <dd class="col-9 text-start">Рейтинг</dd>
+                    <dd class="col-3 text-end">@Model.AverageRate</dd>
+                    <dd class="col-9 text-start">Дата рождения</dd>
+                    <dd class="col-3 text-end">@Model.DateOfBirth</dd>
+                    <dd class="col-9 text-start">На сайте с</dd>
+                    <dd class="col-3 text-end">@Model.DateOfRegistration</dd>
+                    <dd class="col-9 text-start">Контактная информация</dd>
+                    <dd class="col-3 text-end">@Model.ContactDetails</dd>
+                </dl>
+                <h5 class="text-center"></h5>
+                <h3 class="text-center"></h3>
+            </div>
+
+            <a></a>
+        </div>
+
+    </div>
+</div>
