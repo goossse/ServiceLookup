@@ -1,0 +1,44 @@
+﻿@using ServiceLookup.Models.UserVM
+@model ServiceViewModel
+
+<h4 class="text-center px-0">Перегляд послуги</h4>
+<div class="container py-5 bg-light">
+    <div class="row px-4">
+        <div class="col-12 col-md-4">
+            <div class="row row-cols-1 g-3">
+                @if (Model.Image == null)
+                {
+                    <img class="img-fluid img-thumbnail" src="/images/massage1.jpg">
+                }
+                else
+                {
+                    <img class="img-fluid img-thumbnail" src="@Model.Image">
+                }
+                <h5 class="text-center">@Model.Title</h5>
+                <a href="/Client/ApplyRequest/@Model.Id" class="btn btn-success py-2" style="width: 100%; ">Подати заявку</a>
+                <a href="/User/GetUser/@Model.UserId" class="btn btn-outline-secondary py-2" style="width: 100%">Переглянути майстра</a>
+                <a href="" class="btn btn-outline-secondary py-2" style="width: 100%">Переглянути вiдгуки</a>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-8">
+            <div class="row row-cols-1 g-3 py-2">
+                <h5 class="text-center">@Model.Title</h5>
+                <h7 class="text-center">Про послугу</h7>
+                <p>@Model.Info<p>
+                    <dl class="row">
+                        <dd class="col-9 text-start">Рейтинг</dd>
+                        <dd class="col-3 text-end">@Model.AverageRate</dd>
+                        <dd class="col-9 text-start">Дата створення</dd>
+                        <dd class="col-3 text-end">@Model.DateOfCreating</dd>
+                        <dd class="col-9 text-start">Цiни</dd>
+                        <dd class="col-3 text-end">100грн/сеанс</dd>
+                    </dl>
+                    <h5 class="text-center"></h5>
+                    <h3 class="text-center"></h3>
+            </div>
+
+            <a></a>
+        </div>
+    </div>
+</div>

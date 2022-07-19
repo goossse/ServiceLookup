@@ -3,7 +3,7 @@
 
 <div class="album py-5 bg-light">
     <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="row row-cols-2 row-cols-lg-4 g-3">
             @foreach (var service in Model)
             {
                 <div class="col">
@@ -25,12 +25,9 @@
                             <p class="card-text" style="font-size: large;">@service.Title</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button href="/User/GetService/@service.Id" type="button"
-                                        class="btn btn-sm btn-outline-secondary">
-
+                                    <a href="/User/GetService/@service.Id"class="btn btn-sm btn-success">
                                         Послуга
-
-                                    </button>
+                                    </a>
                                     <button href="/User/GetUser/@service.Id" type="button"
                                         class="btn btn-sm btn-outline-secondary">
 

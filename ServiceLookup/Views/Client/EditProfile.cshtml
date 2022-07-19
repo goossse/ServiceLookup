@@ -1,0 +1,61 @@
+﻿@using ServiceLookup.Models.ClientVM
+
+@model ProfileViewModel
+
+<h4 class="text-center px-0">Редагування профілю</h4>
+<div class="container py-5 bg-light">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <form method="post" asp-controller="Client" asp-action="EditProfile">
+                <div class="row mb-3">
+                    <div class="col-auto">
+                        <label asp-for="Name" class="form-label">Name</label>
+                        <input asp-for="Name" type="text" class="form-control" placeholder="Ім'я" aria-label="Name"
+                               value="@Model.Name">
+                    </div>
+                    <div class="col-auto">
+                        <label asp-for="Surname" for="surname" class="form-label">Прізвище</label>
+                        <input asp-for="Surname" type="text" class="form-control" placeholder="Прізвище" aria-label="Surname"
+                        value="@Model.Surname">
+                    </div>
+                </div>
+                <div class="row align-items-center mb-3">
+                    <div class="col-auto">
+                        <label asp-for="ShortDescription" class="form-label">Короткий опис (спеціальність)</label>
+                        <input asp-for="ShortDescription" type="text" class="form-control" placeholder="Звичайний клієнт"
+                               aria-label="ShortDescription">
+                    </div>
+                    <div class="col-auto">
+                        <span id="ShortDecriptionHelp" class="form-text">
+                            Залишіть поле порожнім, якщо бажаєте відображатися як звичайний клієнт.
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="DateOfBirth" class="form-label">Дата народження </label>
+                    <input asp-for="DateOfBirth" type="date" class="form-control" aria-label="DateOfBirth">
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ContactDetails" class="form-label">Контактні дані</label>
+                    <textarea asp-for="ContactDetails" class="form-control" rows="3"
+                              placeholder="Електронна пошта, номери телефонів, адреса, тощо."></textarea>
+                </div>
+                <div class="row row-cols-2">
+                    <div class="d-grid gap-2 col-4">
+                        <button type="submit" class="btn btn-secondary">Accept</button>
+                    </div>
+                    <div class="d-grid gap-2 col-4">
+                        <a asp-controller="Client" asp-action="MyProfile" class="btn btn-outline-secondary">OTMENA</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <img class="img-fluid img-thumbnail" src="~/images/massagist1.jpg">
+            <div class="mb-3 py-3">
+                <label for="formFile" class="form-label">Upload new image</label>
+                <input class="form-control" type="file" id="formFile">
+            </div>
+        </div>
+    </div>
+</div>

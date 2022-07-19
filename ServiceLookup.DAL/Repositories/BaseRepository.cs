@@ -48,6 +48,7 @@ namespace ServiceLookup.DAL.Repositories
 
         public async Task Update(T item)
         {
+            db.Entry(item).State = EntityState.Modified;
             dbSet.Update(item);
             await db.SaveChangesAsync();
         }
