@@ -18,8 +18,11 @@ namespace ServiceLookup.DAL.Entity
         public DateTime DateTimeOfCreating { get; set; }
         [Required]
         public DateTime StartOfBooking { get; set; }
-        [Required]
+
         public DateTime EndOfBooking { get; set; }
+
+        public int PriceId { get; set; }
+        public Price Price { get; set; }
 
         public int UserId { get; set; }
         public User? User { get; set; }

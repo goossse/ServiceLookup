@@ -10,10 +10,11 @@ namespace ServiceLookup.BL.DTO
     {
         public int Id { get; set; }
         public string? Description { get; set; }
-        public DateTime DateTimeOfCreating { get; set; }
         public DateTime StartOfBooking { get; set; }
         public DateTime EndOfBooking { get; set; }
 
+        public int PriceId { get; set; }
+        public PriceDTO Price { get; set; }
         public int UserId { get; set; }
         public UserDTO? User { get; set; }
 

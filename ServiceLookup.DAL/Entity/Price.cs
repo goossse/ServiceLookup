@@ -17,9 +17,5 @@ namespace ServiceLookup.DAL.Entity
 
         [Required]
         public int Value { get; set; }
-
-        [Required]
-        public int ServiceId { get; set; }
-        public Service? Service { get; set; }
     }
 }
