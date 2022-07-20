@@ -1,0 +1,38 @@
+﻿@using ServiceLookup.Models.ClientVM
+
+@model RequestViewModel
+
+<form method="post" asp-controller="Client" asp-action="ApplyRequest" enctype="multipart/form-data">
+    <input asp-for="PriceId" type="hidden" />
+    <input asp-for="ServiceId" type="hidden" />
+    <div class="mb-3">
+        <label asp-for="DateOfBooking" class="form-label">Дата бронювання</label>
+        <input asp-for="DateOfBooking" type="date" class="form-control" aria-label="DateOfBooking">
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <label asp-for="StartOfBooking" class="form-label">Час початку бронювання</label>
+            <input asp-for="StartOfBooking" type="time" class="form-control" aria-label="StartOfBooking">
+        </div>
+        <div class="col">
+            <label asp-for="EndOfBooking" class="form-label">Час завершення бронювання</label>
+            <input asp-for="EndOfBooking" type="time" class="form-control" aria-label="EndOfBooking">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Додаткова інформація (необов'язково)</label>
+        <textarea asp-for="Description" class="form-control" rows="3"
+                  placeholder="Способи зв'язатися, адреси, умови і т.д."></textarea>
+    </div>
+
+
+    <div class="row row-cols-2">
+        <div class="d-grid gap-2 col-4">
+            <button type="submit" class="btn btn-success">Подати заявку</button>
+        </div>
+        <div class="d-grid gap-2 col-4">
+            <a asp-controller="User" asp-action="GetService" asp-route-id="@Model.ServiceId"
+               class="btn btn-outline-secondary">Скасувати</a>
+        </div>
+    </div>
+</form>

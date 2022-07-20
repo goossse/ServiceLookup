@@ -12,7 +12,7 @@ namespace ServiceLookup.BL.Services.Interfaces
     public interface IProfile
     {
         public Task<UserDTO> GetProfile(int id);
-        public void EditProfile(UserDTO user, UserManager<User> userManager);
+        public Task EditProfile(User user, UserManager<User> userManager);
         public void DeleteProfile(int id);
     }
 }

@@ -12,7 +12,7 @@ namespace ServiceLookup.DAL.Interfaces
         Task<T> FindById(int id);
         Task<IEnumerable<T>> Get();
         Task Remove(int id);
-        Task Update(T item);
+        void Update(T item);
 
     }
 }

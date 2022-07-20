@@ -50,6 +50,11 @@ namespace ServiceLookup.BL.Services.Implementations
             return list;
         }
 
+        public async Task<PriceDTO> GetPrice(int id)
+        {
+            PriceDTO price = mapper.Map<PriceDTO>(await unitOfWork.Prices.FindById(id));
+            return price;
+        }
 
     }
 }

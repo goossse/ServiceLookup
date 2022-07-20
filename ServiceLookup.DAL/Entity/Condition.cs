@@ -12,11 +12,9 @@ namespace ServiceLookup.DAL.Entity
         [Required]
         public int Id { get; set; }
         [Required]
+        public string Title { get; set; }
+        [Required]
         [StringLength(2000, MinimumLength = 2)]
         public string? Info { get; set; }
-
-        [Required]
-        public int? RequestId { get; set; }
-        public Request? Request { get; set; }
     }
 }

@@ -9,8 +9,7 @@ namespace ServiceLookup.BL.DTO
     public class ConditionDTO
     {
         public int Id { get; set; }
+        public string Title { get; set; }
         public string? Info { get; set; }
-        public int? RequestId { get; set; }
-        public RequestDTO? Request { get; set; }
     }
 }

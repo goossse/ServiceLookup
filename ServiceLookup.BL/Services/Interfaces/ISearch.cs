@@ -13,5 +13,6 @@ namespace ServiceLookup.BL.Services.Interfaces
         public Task<ServiceDTO> GetService(int id);
         public IEnumerable<ServiceDTO> GetUsersServices(int userId); //async??
         public Task<IEnumerable<ServiceDTO>> GetServicesByTitle(string text);
+        public Task<PriceDTO> GetPrice(int id);
     }
 }

@@ -29,16 +29,14 @@ namespace ServiceLookup.BL.Services.Implementations
             await unitOfWork.Users.Remove(id);
         }
 
-        public async void EditProfile(UserDTO _user, UserManager<User> userManager)
+        public async Task EditProfile(User _user, UserManager<User> userManager)
         {
-            User user = mapper.Map<User>(_user);
-            await userManager.UpdateAsync(user);// НЕ РАБОТАЕТ(???)
-            /*await unitOfWork.Users.Update(mapper.Map<User>(user));*/
+            await userManager.UpdateAsync(_user);
         }
 
         public async Task<UserDTO> GetProfile(int id)
         {
-            var profile = await unitOfWork.Users.FindById(id);
+            User profile = await unitOfWork.Users.FindById(id);
             return (mapper.Map<UserDTO>(profile));
         }
     }

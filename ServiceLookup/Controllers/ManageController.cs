@@ -40,7 +40,8 @@ namespace ServiceLookup.Controllers
         public async Task<IActionResult> Create(CreateServiceViewModel _service)
         {
             var userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
-            var serv = new ServiceDTO() { Title = _service.Title, Info = _service.Info, UserId = userId };
+            PriceDTO temp = new PriceDTO() { Currency = "Гривень", Value = 100};
+            var serv = new ServiceDTO() { Title = _service.Title, Info = _service.Info, UserId = userId, Price = temp };
             if (_service.Image != null)
                 serv.Image = SaveImage(_service.Image);
             bool check = serviceService.CreateService(serv);

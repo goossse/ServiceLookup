@@ -56,10 +56,10 @@ namespace ServiceLookup.DAL.Repositories
             await db.SaveChangesAsync();
         }
 
-        public async Task Update(Service item)
+        public void Update(Service item)
         {
             db.Services.Update(item);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
         }
     }
 }

@@ -24,12 +24,14 @@ namespace ServiceLookup.DAL.Entity
         public int PriceId { get; set; }
         public Price Price { get; set; }
 
+        public int ConditionId { get; set; }
+
         public int UserId { get; set; }
         public User? User { get; set; }
 
         [Required]
         public int ServiceId { get; set; }
         public Service? Service { get; set; }
-        public List<Condition>? Conditions { get; set; }
+
     }
 }

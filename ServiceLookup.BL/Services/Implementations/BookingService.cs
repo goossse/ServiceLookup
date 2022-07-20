@@ -33,5 +33,16 @@ namespace ServiceLookup.BL.Services.Implementations
             Request request = mapper.Map<Request>(_request);
              unitOfWork.Requests.Create(request);
         }
+
+        public async Task<IEnumerable<RequestDTO>> GetRequests(int id)
+        {
+            IEnumerable<RequestDTO> list = mapper.Map<IEnumerable<RequestDTO>>(await unitOfWork.Requests.Get()).Where(r => r.UserId == id);
+            return list;
+        }
+        
+        public async Task DeleteRequest(int id)
+        {
+            await unitOfWork.Requests.Remove(id);
+        }
     }
 }

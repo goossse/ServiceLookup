@@ -46,11 +46,11 @@ namespace ServiceLookup.DAL.Repositories
             await db.SaveChangesAsync();
         }
 
-        public async Task Update(T item)
+        public void Update(T item)
         {
             db.Entry(item).State = EntityState.Modified;
-            dbSet.Update(item);
-            await db.SaveChangesAsync();
+            /*dbSet.Update(item);*/
+            db.SaveChanges();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace ServiceLookup.BL.Services.Interfaces
     public interface IBooking
     {
         public void ApplyRequest(RequestDTO _request);
-
+        public Task<IEnumerable<RequestDTO>> GetRequests(int id);
+        public Task DeleteRequest(int id);
     }
 }
