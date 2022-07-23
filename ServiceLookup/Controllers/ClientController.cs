@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLookup.BL.DTO;
@@ -12,6 +13,7 @@ using ServiceLookup.Models.UserVM;
 
 namespace ServiceLookup.Controllers
 {
+    [Authorize]
     public class ClientController : Controller
     {
         IBooking bookingService;
@@ -109,8 +111,7 @@ namespace ServiceLookup.Controllers
                 Description = reqVM.Description
             };
             bookingService.ApplyRequest(request);
-            /*return Redirect("/Client/MyRequests");*/
-            return Redirect("/Client/MyProfile");
+            return Redirect("/Client/MyRequests");
         }
         [HttpGet]
         public async Task<IActionResult> MyRequests()
@@ -140,7 +141,7 @@ namespace ServiceLookup.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteRequest(int id)
         {
-            bookingService.DeleteRequest(id);
+            await bookingService.DeleteRequest(id);
             return Redirect("/Client/MyRequests");
         }
     }

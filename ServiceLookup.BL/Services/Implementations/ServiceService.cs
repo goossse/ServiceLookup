@@ -30,15 +30,48 @@ namespace ServiceLookup.BL.Services.Implementations
 
         public bool CreateService(ServiceDTO _service)
         {
-            var service = mapper.Map<Service>(_service);
+            Service service = mapper.Map<Service>(_service);
             unitOfWork.Services.Create(service);
             return true;
         }
-        public IEnumerable<ServiceDTO> MyServices(Guid userId)
+
+        public async Task DeleteService(int id)
         {
-            /*            var List = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.Get());
-                        return List.Where(s => s.UserId == userId);*/
-            throw new NotImplementedException();
+            await unitOfWork.Services.Remove(id);
+        }
+
+        public void EditService(ServiceDTO _service)
+        {
+            Service service = mapper.Map<Service>(_service);
+            unitOfWork.Services.Update(service);
+        }
+
+        public async Task<IEnumerable<ServiceDTO>> MyServices(int userId)
+        {
+            return mapper.Map<IEnumerable<ServiceDTO>>(await unitOfWork.Services.GetByUser(userId));
+
+        }
+
+        public async Task<IEnumerable<RequestDTO>> MyRequests(int userId)
+        {
+            return mapper.Map<IEnumerable<RequestDTO>>(await unitOfWork.Requests.GetRequestsServices(userId, 0));
+        }
+
+        public async Task<IEnumerable<RequestDTO>> MyBookings(int userId)
+        {
+            return mapper.Map<IEnumerable<RequestDTO>>(await unitOfWork.Requests.GetRequestsServices(userId, 1));
+        }
+
+        public async Task<IEnumerable<ReviewDTO>> MyReviews(int userId)
+        {
+            return mapper.Map<IEnumerable<ReviewDTO>>(await unitOfWork.Reviews.GetMyReviews(userId));
+        }
+
+        public async Task AnswerRequest(int id, int conditionId)
+        {
+            Request request = mapper.Map<Request>(await unitOfWork.Requests.FindById(id));
+            request.ConditionId = conditionId;
+            unitOfWork.Requests.Update(request);
         }
     }
 

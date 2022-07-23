@@ -13,7 +13,7 @@ namespace ServiceLookup.DAL.Repositories
 
     {
         private readonly ApplicationDbContext db;
-        public ServiceRepository (ApplicationDbContext _db)
+        public ServiceRepository(ApplicationDbContext _db)
         {
             db = _db;
         }
@@ -26,27 +26,29 @@ namespace ServiceLookup.DAL.Repositories
 
         public async Task<Service> FindById(int id)
         {
-            return await db.Services.FindAsync(id);
+            return await db.Services.Include(s => s.Price).FirstAsync(s => s.Id == id);
         }
 
         public async Task<IEnumerable<Service>> FindByTitleAsync(string text)
         {
-            return await db.Services.Where(s => s.Title.Contains(text)).ToListAsync();
+            return await db.Services.Include(s => s.Price)
+                .Where(s => s.Title.Contains(text)).ToListAsync();
         }
 
         public async Task<IEnumerable<Service>> Get()
         {
-            return await db.Services.ToListAsync();
+            return await db.Services.Include(s => s.Price)
+                .ToListAsync();
         }
 
         public async Task<Service> GetByTitleAsync(string title)
         {
-            return await db.Services.FirstOrDefaultAsync(s => s.Title == title);
+            return await db.Services.Include(s => s.Price).FirstOrDefaultAsync(s => s.Title == title);
         }
 
         public async Task<IEnumerable<Service>> GetByUser(int userId)
         {
-            return await db.Services.Where(s=> s.UserId == userId).ToListAsync();
+            return await db.Services.Include(s => s.Price).Where(s => s.UserId == userId).ToListAsync();
         }
 
         public async Task Remove(int id)

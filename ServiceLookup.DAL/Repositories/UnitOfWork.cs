@@ -15,9 +15,9 @@ namespace ServiceLookup.DAL.Repositories
 
         public IBaseRepository<Price> repositoryPrices;
 
-        public IBaseRepository<Request> repositoryRequests;
+        public IRequestRepository repositoryRequests;
 
-        public IBaseRepository<Review> repositoryReviews;
+        public IReviewRepository repositoryReviews;
 
         public IBaseRepository<ReviewCriteria> repositoryReviewCriterias;
 
@@ -54,21 +54,21 @@ namespace ServiceLookup.DAL.Repositories
                 return repositoryPrices;
             }
         }
-        public IBaseRepository<Request> Requests
+        public IRequestRepository Requests
         {
             get
             {
                 if (repositoryRequests == null)
-                    repositoryRequests = new BaseRepository<Request>(db);
+                    repositoryRequests = new RequestRepository(db);
                 return repositoryRequests;
             }
         }
-        public IBaseRepository<Review> Reviews
+        public IReviewRepository Reviews
         {
             get
             {
                 if (repositoryReviews == null)
-                    repositoryReviews = new BaseRepository<Review>(db);
+                    repositoryReviews = new ReviewRepository(db);
                 return repositoryReviews;
             }
         }

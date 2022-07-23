@@ -35,7 +35,8 @@ namespace ServiceLookup.BL.Services.Implementations
 
         public async Task<ServiceDTO> GetService(int id)
         {
-            return mapper.Map<ServiceDTO>(await unitOfWork.Services.FindById(id));
+            var item = await unitOfWork.Services.FindById(id);
+            return mapper.Map<ServiceDTO>(item);
         }
 
         public IEnumerable<ServiceDTO> GetUsersServices(int userId)

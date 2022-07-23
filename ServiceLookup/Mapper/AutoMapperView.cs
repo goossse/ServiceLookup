@@ -13,7 +13,7 @@ namespace ServiceLookup.Mapper
             /*CreateMap<CreateServiceViewModel, ServiceDTO>();*/
             CreateMap<UserDTO, UsersViewModel>();
             CreateMap<ProfileViewModel, UserDTO>().ReverseMap();
-            CreateMap<ServiceDTO, ServiceViewModel>().ReverseMap();
+            CreateMap<ServiceDTO, Models.UserVM.ServiceViewModel>().ReverseMap();
         }
     }
 }

@@ -11,8 +11,8 @@ namespace ServiceLookup.DAL.Interfaces
     {
         IBaseRepository<Condition> Conditions { get; }
         IBaseRepository<Price> Prices { get; }
-        IBaseRepository<Request> Requests { get; }
-        IBaseRepository<Review> Reviews { get; }
+        IRequestRepository Requests { get; }
+        IReviewRepository Reviews { get; }
         IBaseRepository<ReviewCriteria> ReviewCriterias { get; }
         IServiceRepository Services { get; }
         IBaseRepository<ServiceType> ServiceTypes { get; }

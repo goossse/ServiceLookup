@@ -12,7 +12,6 @@ namespace ServiceLookup.BL.DTO
         public string? Currency { get; set; }
         public int Value { get; set; }
         public int ServiceId { get; set; }
-        public ServiceDTO? Service { get; set; }
 
     }
 }
