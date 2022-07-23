@@ -1,0 +1,6 @@
+﻿@using ServiceLookup.BL.DTO
+
+@model IEnumerable<RequestDTO>
+
+<h4 class="text-center">Мої бронювання (прийняті запити)</h4>
+@await Html.PartialAsync("Partial/RequestsPartial.cshtml", Model);

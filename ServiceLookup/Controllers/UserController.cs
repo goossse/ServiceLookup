@@ -17,8 +17,10 @@ namespace ServiceLookup.Controllers
         ISearch searchService;
         IUser userService;
         IMapper mapper;
-        public UserController(ILogger<UserController> _logger, ApplicationDbContext db, UserManager<User> userManager)
+        private readonly UserManager<User> userManager;
+        public UserController(ILogger<UserController> _logger, ApplicationDbContext db, UserManager<User> _userManager)
         {
+            userManager = _userManager;
             logger = _logger;
             searchService = new SearchService(db);//?? не должны ли мы получить в конструкторе реализацию??
             userService = new UserService(db);
@@ -39,7 +41,12 @@ namespace ServiceLookup.Controllers
         [HttpGet]
         public async Task<IActionResult> GetService(int id)
         {
+            int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
             ServiceViewModel service = mapper.Map<ServiceViewModel>(await searchService.GetService(id));
+            if (service.UserId == userId)
+            {
+                return Redirect($"~/Manage/MyService/{id}");
+            }
             return View(service);
         }
 

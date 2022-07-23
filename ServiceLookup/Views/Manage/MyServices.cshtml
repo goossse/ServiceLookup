@@ -1,6 +1,8 @@
 ﻿@using ServiceLookup.BL.DTO
 @model IEnumerable<ServiceDTO>
 
+<h4 class="text-center">Перегляд власних послуг</h4>
+<a asp-controller="Manage" asp-action="CreateService" class="btn btn-success py-2 px-2" style="width: 100%; ">Створити нову послугу</a>
 
 <div class="container py-5 bg-light">
     <div class="row row-cols-2 row-cols-md-3 row-cols-xxl-4 g-3">
@@ -30,17 +32,9 @@
                             <dd class="col-6 text-end">@service.Price.Value @service.Price.Currency</dd>
                         </dl>
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="/User/GetService/@service.Id" class="btn btn-sm btn-success">
-                                    Послуга
-                                </a>
-                                <button href="/User/GetUser/@service.Id" type="button"
-                                    class="btn btn-sm btn-outline-secondary">
-
-                                    Майстер
-
-                                </button>
-                            </div>
+                            <a href="/Manage/MyService/@service.Id" class="btn btn-sm btn-success">
+                                Докладнiше
+                            </a>
                             <small class="text-muted">Сьогодні, 17:43</small>
                         </div>
                     </div>

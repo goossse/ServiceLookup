@@ -1,0 +1,75 @@
+﻿@using ServiceLookup.BL.DTO
+
+@model IEnumerable<RequestDTO>
+
+<div class="container py-5 bg-light g-3">
+    @foreach (RequestDTO request in Model)
+    {
+        <div class="row g-2">
+            <div class="card bg py-2 g-3 px-2 bg-white">
+                <div class="row">
+                    <div class="col-12 col-lg-9 px-5 py-2">
+                        <dl class="row text">
+                            <dd class="col-6">
+                                <h5>Дата бронювання: <span class="badge bg-secondary">@request.DateTimeOfCreating</span></h5>
+                            </dd>
+                            <dd class="col-6">
+                                <h5>Цiна: <span class="badge bg-secondary">@request.Price.Value @request.Price.Currency</span></h5>
+                            </dd>
+                        </dl>
+                        <dl class="row text">
+                            <dd class="col-auto">
+                                <h5>Час бронювання:</h5>
+                            </dd>
+                            <dd class="col-auto">
+                                <h5>з <span class="badge bg-secondary">@request.StartOfBooking</span></h5>
+                            </dd>
+                            <dd class="col-auto">
+                                <h5>до <span class="badge bg-secondary">@request.EndOfBooking</span></h5>
+                            </dd>
+                        </dl>
+                        <dl class="row">
+                            <dd class="col-auto">
+                                <h5>Інформація:</h5>
+                            </dd>
+                            <dd class="col">
+                                <textarea class="form-control" rows="3" type="text"
+                                      placeholder="@request.Description"
+                                      aria-label="readonly input example" readonly></textarea>
+                            </dd>
+                        </dl>
+                        <div class="row">
+                            <div class="d-grid col-3">
+                                <a asp-controller="Manage" asp-action="AcceptRequest" asp-route-id="@request.Id" class="btn btn-success btn-md">Підтвердити</a>
+                            </div>
+                            <div class="d-grid col-3">
+                                <a asp-controller="Manage" asp-action="RejectRequest" asp-route-id="@request.Id" class="btn btn-secondary btn-md">Відхилити</a>
+                            </div>
+
+                            <div class="col-6">
+                                <h5>Статус заявки: <span class="badge bg-success">Очікування підтвердження</span></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3 py-2 px-2">
+                        @if (request.Service.Image == null)
+                        {
+                            <img class="img-fluid img-thumbnail" src="~/images/massage5.jpg">
+                        }
+                        else
+                        {
+                            <img class="img-fluid img-thumbnail" src="@request.Service.Image">
+
+                        }
+                        <h4 class="text-black text-center">@request.Service.Title</h4>
+                        <div class="d-grid">
+                            <a asp-controller="User" asp-action="GetService" asp-route-id="@request.ServiceId" class="btn btn-outline-success px-2 py-2">Переглянути послугу</a>
+                            <a asp-controller="User" asp-action="GetUser" asp-route-id="@request.UserId" class="btn btn-outline-success px-2 py-2">Переглянути користувача</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

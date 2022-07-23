@@ -2,7 +2,7 @@
 
 @model ServiceViewModel
 
-<h4 class="text-center px-0">Створення послуги</h4>
+<h4 class="text-center px-0">Редагування послуги</h4>
 <div class="container py-5 bg-light">
     <form method="post" asp-controller="Manage" asp-action="CreateService" enctype="multipart/form-data">
         <div class="row">
@@ -36,16 +36,16 @@
                 </div>
             </div>
             <div class="col-12 col-md-4 mb-3">
-                <label asp-for="ImageFile">Додати зображення до послуги</label>
+                <label asp-for="ImageFile">Додати нове зображення до послуги</label>
                 <input asp-for="ImageFile" type="file" class="form-control" />
             </div>
         </div>
         <div class="row row-cols-2">
             <div class="d-grid gap-2 col-4">
-                <button type="submit" class="btn btn-secondary">Створити послугу</button>
+                <button type="submit" class="btn btn-secondary">Зберегти</button>
             </div>
             <div class="d-grid gap-2 col-4">
-                <a asp-controller="Manager" asp-action="MyServices" class="btn btn-outline-secondary">Скасувати</a>
+                <a asp-controller="Manage" asp-action="MyServices" class="btn btn-outline-secondary">Скасувати</a>
             </div>
         </div>
     </form>

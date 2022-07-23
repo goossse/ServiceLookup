@@ -42,8 +42,12 @@ namespace ServiceLookup.Controllers
         [HttpGet]
         public async Task<IActionResult> EditService(int id)
         {
-            ServiceViewModel service = mapper.Map<ServiceViewModel>(await searchService.GetService(id));
-            return View(service);
+            ServiceDTO service = await searchService.GetService(id);
+            ServiceViewModel serviceVM = new ServiceViewModel()
+            {
+                Title = service.Title, Info = service.Info, Price = service.Price
+            };
+            return View(serviceVM);
         }
 
         [HttpPost]
@@ -52,11 +56,24 @@ namespace ServiceLookup.Controllers
             ServiceDTO service = await searchService.GetService(serviceVM.Id);
             service.Title = serviceVM.Title;
             service.Info = serviceVM.Info;
+            service.Price = serviceVM.Price;
             if (serviceVM.ImageFile != null)
             {
                 service.Image = SaveImage(serviceVM.ImageFile);
             }
             return Redirect("~/Manage/MyServices");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Myservice(int id)
+        {
+            int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
+            ServiceDTO service = await searchService.GetService(id);
+            if (service.UserId != userId)
+            {
+                return Redirect($"~/User/GetService/{id}");
+            }
+            return View(service);
         }
 
         [HttpGet]
@@ -76,16 +93,15 @@ namespace ServiceLookup.Controllers
         public async Task<IActionResult> CreateService(ServiceViewModel _service)
         {
             var userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
-            PriceDTO temp = new PriceDTO() { Currency = "Гривень", Value = 100 };
-            ServiceDTO serv = new ServiceDTO() { Title = _service.Title, Info = _service.Info, UserId = userId, Price = temp };
-            if (_service.Image != null)
+            ServiceDTO serv = new ServiceDTO() { Title = _service.Title, Info = _service.Info, UserId = userId, Price = _service.Price, DateOfCreating = DateTime.Now };
+            if (_service.ImageFile != null)
                 serv.Image = SaveImage(_service.ImageFile);
             bool check = serviceService.CreateService(serv);
             return Redirect("~/Manage/MyServices");
         }
 
         [HttpGet]
-        public  async Task<IActionResult> MyRequests()
+        public async Task<IActionResult> MyRequests()
         {
             int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
             IEnumerable<RequestDTO> list = await serviceService.MyRequests(userId);

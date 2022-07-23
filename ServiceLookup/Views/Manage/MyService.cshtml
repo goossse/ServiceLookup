@@ -1,5 +1,6 @@
-﻿@using ServiceLookup.Models.UserVM
-@model ServiceViewModel
+﻿@using ServiceLookup.BL.DTO
+
+@model ServiceDTO
 
 <div class="container py-5 bg-light">
     <div class="row px-4">
@@ -14,9 +15,10 @@
                     <img class="img-fluid img-thumbnail" src="@Model.Image">
                 }
                 <h5 class="text-center">@Model.Title</h5>
-                <a href="/Client/ApplyRequest/@Model.Id" class="btn btn-success py-2" style="width: 100%; ">Подати заявку</a>
-                <a href="/User/GetUser/@Model.UserId" class="btn btn-outline-secondary py-2" style="width: 100%">Переглянути майстра</a>
+                <a href="/Manage/EditService/@Model.Id" class="btn btn-success py-2" style="width: 100%; ">Редагувати послугу</a>
+                <a href="/Manage/GetRequestsByService/@Model.UserId" class="btn btn-outline-secondary py-2" style="width: 100%">Заявки до послуги</a>
                 <a href="" class="btn btn-outline-secondary py-2" style="width: 100%">Переглянути вiдгуки</a>
+                <a href="/Manage/DeleteService/@Model.Id" class="btn btn-secondary py-2" style="width: 100%">Видалити послугу</a>
             </div>
 
         </div>
@@ -31,7 +33,15 @@
                         <dd class="col-9 text-start">Дата створення</dd>
                         <dd class="col-3 text-end">@Model.DateOfCreating</dd>
                         <dd class="col-9 text-start">Цiни</dd>
-                        <dd class="col-3 text-end">100грн/сеанс</dd>
+                            @if (@Model.Price != null)
+                            {
+                            <dd class="col-3 text-end">@Model.Price.Value @Model.Price.Currency</dd>
+                            }
+                            else
+                            {
+                            <dd class="col-3 text-end">Ціна не вказана</dd>
+
+                            }
                     </dl>
                     <h5 class="text-center"></h5>
                     <h3 class="text-center"></h3>
