@@ -91,7 +91,15 @@ namespace ServiceLookup.Controllers
             IEnumerable<RequestDTO> list = await serviceService.MyRequests(userId);
             return View(list);
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> MyBookings()
+        {
+            int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
+            IEnumerable<RequestDTO> list = await serviceService.MyBookings(userId);
+            return View(list);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AcceptRequest(int id)
         {

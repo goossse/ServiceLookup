@@ -1,5 +1,6 @@
 ﻿@using ServiceLookup.BL.DTO
 @model IEnumerable<UserDTO>
 
-<h2>Список користувачів</h2>
+<h4 class="text-center">Список користувачів</h4>
+
 @await Html.PartialAsync("/Views/User/Partial/UsersPartial.cshtml", Model)

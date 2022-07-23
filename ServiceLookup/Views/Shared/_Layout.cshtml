@@ -45,65 +45,55 @@
         </nav>
     </header>
 
-    <div class="d-flex flex-nowrap">
-        <aside class="bd-sidebar bg-light">
-            <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
-                 aria-labelledby="bdSidebarOffcanvasLabel">
-                <div class="offcanvas-header border-bottom">
-                    <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">Меню користувача</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
-                            data-bs-target="#bdSidebar"></button>
+    <div class="row">
+        <div class="col col-auto bg-light">
+            <aside class="bd-sidebar">
+                <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar"
+                     aria-labelledby="bdSidebarOffcanvasLabel">
+                    <div class="offcanvas-header border-bottom">
+                        <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">Меню користувача</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                                data-bs-target="#bdSidebar"></button>
+                    </div>
+
+                    <div class="offcanvas-body">
+                        <ul class="nav nav-pills flex-column mb-auto">
+                            <hr class=" d-none d-lg-inline" style="width: 280px;">
+                            <li class="nav-item">
+                                <a asp-controller="Manage" asp-action="MyServices" class="nav-link link-dark" aria-current="page">Мої послуги</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Manage" asp-action="MyBookings" class="nav-link link-dark">Мої бронювання</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Manage" asp-action="MyRequests" class="nav-link link-dark">Мої запити</a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link link-dark">Графік</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Client" asp-action="MyRequests" class="nav-link link-dark">Заявки</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Client" asp-action="MyReviews" class="nav-link link-dark">Відгуки</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Client" asp-action="MyProfile" class="nav-link link-dark">Мій профіль</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+            </aside>
+        </div>
 
-                <div class="offcanvas-body">
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <hr class=" d-none d-lg-inline" style="width: 280px;">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link link-dark" aria-current="page">
-
-                                Мої послуги
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link link-dark">
-
-                                Мої бронювання
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link link-dark">
-
-                                Графік
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link link-dark">
-
-                                Запити
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link link-dark">
-
-                                Відгуки
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link link-dark">
-
-                                Мій профіль
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </aside>
-
-
-        <main class="bd-main order-1">
-            @RenderBody()
-        </main>
+        <div class="col">
+            <main class="bd-main order-1 bg-light">
+                @RenderBody()
+            </main>
+        </div>
     </div>
+
+
 
 
     <footer class="border-top footer text-muted">
