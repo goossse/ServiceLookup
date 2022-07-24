@@ -7,6 +7,7 @@ using ServiceLookup.BL.Services.Interfaces;
 using ServiceLookup.DAL;
 using ServiceLookup.DAL.Entity;
 using ServiceLookup.Mapper;
+using ServiceLookup.Models;
 using ServiceLookup.Models.UserVM;
 
 namespace ServiceLookup.Controllers
@@ -71,8 +72,11 @@ namespace ServiceLookup.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> FindServices(string Order, int? TypeId = null, string TextSearch = "", bool IsRatedOnly = false, int? RateStart = null, int? RateEnd = null)
+        public async Task<IActionResult> FindServices(string Order, int? TypeId = null, string TextSearch = "",
+            bool IsRatedOnly = false, int? RateStart = null, int? RateEnd = null, int Page = 1)
         {
+            int PageSize = 12;
+            var pagedList = await searchService.FindServices(TextSearch, TypeId, Order, IsRatedOnly, RateStart, RateEnd, Page, PageSize);
             SearchViewModel searchVM = new SearchViewModel()
             {
                 Types = await searchService.GetTypes(),
@@ -82,7 +86,8 @@ namespace ServiceLookup.Controllers
                 RateStart = RateStart,
                 RateEnd = RateEnd,
                 Order = Order,
-                services = await searchService.FindServices(TextSearch, TypeId, Order, IsRatedOnly, RateStart, RateEnd)
+                services = pagedList.Items,
+                pageViewModel = new PageViewModel(pagedList.Count, Page, PageSize )
             };
             return View(searchVM);
         }

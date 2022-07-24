@@ -13,5 +13,6 @@ namespace ServiceLookup.Models.UserVM
         public string? Order { get; set; }
         //PageView
         public IEnumerable<ServiceDTO> services { get; set; }
+        public PageViewModel pageViewModel { get; set; }
     }
 }

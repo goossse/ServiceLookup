@@ -138,11 +138,23 @@ namespace ServiceLookup.Controllers
             }
             return View(list);
         }
+
         [HttpGet]
         public async Task<IActionResult> DeleteRequest(int id)
         {
             await bookingService.DeleteRequest(id);
             return Redirect("/Client/MyRequests");
         }
+
+/*        [HttpGet]
+        public async Task<IActionResult> CreateReview(int id)
+        {
+            ServiceDTO service = await searchService.GetService(id);
+            string Criterias = await searchService.GetServiceType(service.TypeId)
+            ReviewViewModel reviewVM = new ReviewViewModel()
+            {
+
+            }
+        }*/
     }
 }

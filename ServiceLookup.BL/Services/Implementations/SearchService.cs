@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using ServiceLookup.BL.DTO;
+using ServiceLookup.BL.DTO.PagedList;
 using ServiceLookup.BL.Mapper;
 using ServiceLookup.BL.Services.Interfaces;
 using ServiceLookup.DAL;
+using ServiceLookup.DAL.Entity;
+using ServiceLookup.DAL.Entity.PagedList;
 using ServiceLookup.DAL.Interfaces;
 using ServiceLookup.DAL.Repositories;
 using System;
@@ -45,10 +48,12 @@ namespace ServiceLookup.BL.Services.Implementations
             return list;
         }
 
-        public async Task<IEnumerable<ServiceDTO>> FindServices(string _text, int? _typeId, string _sortOrder, bool _isRatedOnly, int? _rateStart, int? _rateEnd, int _page = 1)
+        public async Task<PagedListDTO<ServiceDTO>> FindServices(string _text, int? _typeId, string _sortOrder,
+            bool _isRatedOnly, int? _rateStart, int? _rateEnd, int _page = 1, int _pageSize = 15)
         {
-            var list = mapper.Map<List<ServiceDTO>>(await unitOfWork.Services.FindByProperties(_text, _typeId, _sortOrder, _isRatedOnly, _rateStart, _rateEnd, _page));
-            return list;
+            PagedList<Service> pagedList = await unitOfWork.Services.FindByProperties(_text, _typeId, _sortOrder, _isRatedOnly, _rateStart, _rateEnd, _page, _pageSize);
+            PagedListDTO<ServiceDTO> pagedListDTO = new PagedListDTO<ServiceDTO>() { Items = mapper.Map<List<ServiceDTO>>(pagedList.Items), Count = pagedList.Count };
+            return pagedListDTO;
         }
 
         public async Task<PriceDTO> GetPrice(int id)

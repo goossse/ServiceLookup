@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ServiceLookup.DAL.Entity.PagedList;
 
 namespace ServiceLookup.DAL.Repositories
 {
@@ -32,8 +33,8 @@ namespace ServiceLookup.DAL.Repositories
 
 
 
-        public async Task<IEnumerable<Service>> FindByProperties(string searchText, int? typeId = null, string sortOrder = "Самые новые",
-            bool IsRatedOnly = false, int? rateStart = 0, int? rateEnd = 10, int page = 1, int? userId = null)
+        public async Task<PagedList<Service>> FindByProperties(string searchText, int? typeId = null, string sortOrder = "Самые новые",
+            bool IsRatedOnly = false, int? rateStart = 0, int? rateEnd = 10, int page = 1, int pageSize = 12, int? userId = null)
         {
             IQueryable<Service> query = db.Services.Include(s => s.Price);
             //Filtration
@@ -49,26 +50,26 @@ namespace ServiceLookup.DAL.Repositories
             switch (sortOrder)
             {
                 case "Найновіші":
-                    query = query.OrderBy(s => s.DateOfCreating); break;
+                    query = query.OrderByDescending(s => s.DateOfCreating); break;
                 case "Найстаріші":
-                    query = query.OrderByDescending(s => s.DateOfCreating); break;
+                    query = query.OrderBy(s => s.DateOfCreating); break;
                 case "Ім'я":
-                    query = query.OrderBy(s => s.DateOfCreating); break;
+                    query = query.OrderBy(s => s.Title); break;
                 case "Ім'я (у зворотньому)":
-                    query = query.OrderByDescending(s => s.DateOfCreating); break;
+                    query = query.OrderByDescending(s => s.Title); break;
                 case "Рейтинг":
-                    query = query.OrderBy(s => s.DateOfCreating); break;
+                    query = query.OrderBy(s => s.AverageRate); break;
                 case "Рейтинг (у зворотньому)":
-                    query = query.OrderByDescending(s => s.DateOfCreating); break;
-            }
-            //
-            return await query.ToListAsync();
-/*            return await GetPagedAsync(query, page);
-*/        }
+                    query = query.OrderByDescending(s => s.AverageRate); break;
+            }     
+            /*return await query.ToListAsync();*/
+            return await GetPagedAsync(query, page, pageSize);
+        }
 
-        public async Task<IEnumerable<Service>> GetPagedAsync(IQueryable<Service> query, int page)
+        public async Task<PagedList<Service>> GetPagedAsync(IQueryable<Service> query, int page, int pageSize = 15)
         {
-            throw new NotFiniteNumberException();
+            return new PagedList<Service>() { Count = query.Count(),
+                Items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync()   };
         }
 
         public async Task<IEnumerable<Service>> Get()
