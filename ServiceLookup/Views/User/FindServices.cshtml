@@ -37,8 +37,22 @@
                 </div>
             </div>
         </div>
+        <div class="col col-auto">
+            <label asp-for="Order" class="form-label">Оберіть тип сортування</label>
+            <select asp-for="Order" class="form-select" aria-label="Order select">
+                <option value="Найновіші" selected>Найновіші</option>
+                <option value="Найстаріші">Найстаріші</option>
+                <option value="Ім'я">Ім'я</option>
+                <option value="Ім'я (у зворотньому)">Ім'я (у зворотньому)</option>
+                <option value="Рейтинг">Рейтинг</option>
+                <option value="Рейтинг (у зворотньому)">Рейтинг (у зворотньому)</option>
+            </select>
+        </div>
+        <div class="col col-auto">
+            <button class="btn btn-outline-success" style="width: 300px;" type="submit">Пошук</button>
+        </div>
     </div>
-    <button class="btn btn-outline-success" style="width: 300px;" type="submit">Пошук</button>
+
 
 </form>
 @await Html.PartialAsync("/Views/User/Partial/ServicesPartial.cshtml", Model.services)
