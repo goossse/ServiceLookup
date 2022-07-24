@@ -45,9 +45,9 @@ namespace ServiceLookup.BL.Services.Implementations
             return list;
         }
 
-        public async Task<IEnumerable<ServiceDTO>> GetServicesByTitle(string text)
+        public async Task<IEnumerable<ServiceDTO>> FindServices(string _text, int? _typeId, string _sortOrder, bool _isRatedOnly, int? _rateStart, int? _rateEnd, int _page = 1)
         {
-            var list = mapper.Map<List<ServiceDTO>>(await unitOfWork.Services.FindByTitleAsync(text));
+            var list = mapper.Map<List<ServiceDTO>>(await unitOfWork.Services.FindByProperties(_text, _typeId, _sortOrder, _isRatedOnly, _rateStart, _rateEnd, _page));
             return list;
         }
 
@@ -55,6 +55,24 @@ namespace ServiceLookup.BL.Services.Implementations
         {
             PriceDTO price = mapper.Map<PriceDTO>(await unitOfWork.Prices.FindById(id));
             return price;
+        }
+
+        public async Task<IEnumerable<ServiceTypeDTO>> GetTypes()
+        {
+            var list = mapper.Map<List<ServiceTypeDTO>>(await unitOfWork.ServiceTypes.Get());
+            return list;
+        }
+
+        public async Task<ServiceTypeDTO> GetServiceType(int id)
+        {
+            ServiceTypeDTO serviceType = mapper.Map<ServiceTypeDTO>(await unitOfWork.ServiceTypes.FindById(id));
+            return serviceType;
+        }
+
+        public async Task<IEnumerable<ServiceDTO>> GetServicesByType(int typeId)
+        {
+            var list = mapper.Map<List<ServiceDTO>>(await unitOfWork.Services.GetByType(typeId));
+            return list;
         }
 
     }

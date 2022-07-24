@@ -28,17 +28,17 @@ namespace ServiceLookup.DAL.Repositories
 
         public async Task<Review> FindById(int id)
         {
-            return await db.Reviews.Include(r => r.Service).FirstAsync(r => r.Id == id);
+            return await db.Reviews.AsNoTracking().Include(r => r.Service).FirstAsync(r => r.Id == id);
         }
 
         public async Task<IEnumerable<Review>> Get()
         {
-            return await db.Reviews.Include(r => r.Service).ToListAsync();
+            return await db.Reviews.AsNoTracking().Include(r => r.Service).ToListAsync();
         }
 
         public async Task<IEnumerable<Review>> GetMyReviews(int id)
         {
-            return await db.Reviews.Include(r => r.Service)
+            return await db.Reviews.AsNoTracking().Include(r => r.Service)
                 .Where(r => r.Service!.UserId == id)
                 .ToListAsync();
         }
@@ -50,10 +50,10 @@ namespace ServiceLookup.DAL.Repositories
             await db.SaveChangesAsync();
         }
 
-        public void Update(Review item)
+        public async Task Update(Review item)
         {
             db.Reviews.Update(item);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
     }
 }

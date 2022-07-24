@@ -36,7 +36,7 @@ namespace ServiceLookup.DAL.Repositories
 
         public async Task<IEnumerable<T>> Get()
         {
-            return await dbSet.ToListAsync();
+            return await dbSet.AsNoTracking().ToListAsync();
         }
 
         public async Task Remove(int id)
@@ -46,11 +46,10 @@ namespace ServiceLookup.DAL.Repositories
             await db.SaveChangesAsync();
         }
 
-        public void Update(T item)
+        public async Task Update(T item)
         {
-            db.Entry(item).State = EntityState.Modified;
-            /*dbSet.Update(item);*/
-            db.SaveChanges();
+            db.Update(item);
+            await db.SaveChangesAsync();
         }
     }
 }

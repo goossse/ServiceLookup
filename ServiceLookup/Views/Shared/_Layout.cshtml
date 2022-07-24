@@ -35,9 +35,9 @@
                         <a class="nav-link active" asp-area="" asp-controller="User" asp-action="GetUsers">Майстри</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search" method="get" asp-controller="User" asp-action="SearchByTitle">
+                <form class="d-flex" role="search" method="get" asp-controller="User" asp-action="FindServices">
                     <input class="form-control me-2" type="search" placeholder="Введіть назву послуги"
-                           aria-label="Search" name="search">
+                           aria-label="Search" name="TextSearch">
                     <button class="btn btn-outline-success" type="submit">Пошук</button>
                 </form>
                 @await Html.PartialAsync("_LoginPartial")

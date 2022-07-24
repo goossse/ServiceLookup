@@ -40,10 +40,10 @@ namespace ServiceLookup.BL.Services.Implementations
             await unitOfWork.Services.Remove(id);
         }
 
-        public void EditService(ServiceDTO _service)
+        public async Task EditService(ServiceDTO _service)
         {
             Service service = mapper.Map<Service>(_service);
-            unitOfWork.Services.Update(service);
+            await unitOfWork.Services.Update(service);
         }
 
         public async Task<IEnumerable<ServiceDTO>> MyServices(int userId)
@@ -71,7 +71,7 @@ namespace ServiceLookup.BL.Services.Implementations
         {
             Request request = mapper.Map<Request>(await unitOfWork.Requests.FindById(id));
             request.ConditionId = conditionId;
-            unitOfWork.Requests.Update(request);
+            await unitOfWork.Requests.Update(request);
         }
     }
 

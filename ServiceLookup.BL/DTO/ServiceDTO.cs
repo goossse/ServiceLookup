@@ -19,8 +19,8 @@ namespace ServiceLookup.BL.DTO
         public PriceDTO? Price { get; set; }
         public int? UserId { get; set; }
         public UserDTO? User { get; set; }
-
-        public List<ServiceTypeDTO>? Types { get; set; }
+        public int? TypeId { get; set; }
+        public ServiceTypeDTO? ServiceType { get; set; }
         public List<RequestDTO>? Requests { get; set; }
         public List<ReviewDTO>? Reviews { get; set; }
     }

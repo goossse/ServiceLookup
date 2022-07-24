@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ServiceLookup.BL.DTO;
 
 namespace ServiceLookup.BL.Services.Interfaces
 {
-    internal interface IModer
+    public interface IModer
     {
+        public bool AddServiceType(ServiceTypeDTO serviceType);
     }
 }

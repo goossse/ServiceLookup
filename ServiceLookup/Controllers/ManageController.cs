@@ -61,6 +61,7 @@ namespace ServiceLookup.Controllers
             {
                 service.Image = SaveImage(serviceVM.ImageFile);
             }
+            await serviceService.EditService(service);
             return Redirect("~/Manage/MyServices");
         }
 
@@ -84,16 +85,20 @@ namespace ServiceLookup.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateService()
+        public async Task<IActionResult> CreateService()
         {
-            return View();
+            var types = await searchService.GetTypes();
+            CreateServiceViewModel serviceVM = new CreateServiceViewModel() { Types = types };
+            return View(serviceVM);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateService(ServiceViewModel _service)
+        public async Task<IActionResult> CreateService(CreateServiceViewModel _service)
         {
             var userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
-            ServiceDTO serv = new ServiceDTO() { Title = _service.Title, Info = _service.Info, UserId = userId, Price = _service.Price, DateOfCreating = DateTime.Now };
+            ServiceDTO serv = new ServiceDTO() { Title = _service.Title, Info = _service.Info, UserId = userId, Price = _service.Price,
+                DateOfCreating = DateTime.Now, TypeId = _service.TypeId 
+            };
             if (_service.ImageFile != null)
                 serv.Image = SaveImage(_service.ImageFile);
             bool check = serviceService.CreateService(serv);

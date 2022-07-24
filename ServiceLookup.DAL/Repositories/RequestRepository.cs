@@ -30,21 +30,21 @@ namespace ServiceLookup.DAL.Repositories
 
         public async Task<Request> FindById(int id)
         {
-            return await db.Requests.Include(r => r.Service)
+            return await db.Requests.AsNoTracking().Include(r => r.Service)
                 /*.Include(r=>Condition)*/
                 .Include(r => r.Price).FirstAsync(r => r.Id == id);
         }
 
         public async Task<IEnumerable<Request>> Get()
         {
-            return await db.Requests.Include(r => r.Service)
+            return await db.Requests.AsNoTracking().Include(r => r.Service)
                 /*.Include(r=>Condition)*/
                 .Include(r => r.Price).ToListAsync();
         }
 
         public async Task<IEnumerable<Request>> GetRequestsServices(int id, int conditionId)
         {
-            IEnumerable<Request> requests = await db.Requests.Include(r => r.Service)
+            IEnumerable<Request> requests = await db.Requests.AsNoTracking().Include(r => r.Service)
                 .Include(r => r.Price)
                 /*.Include(r=>Condition)*/
                 .Where(r => r.Service!.UserId == id /*&& r.ConditionId == conditionId*/).ToListAsync();
@@ -58,10 +58,10 @@ namespace ServiceLookup.DAL.Repositories
             await db.SaveChangesAsync();
         }
 
-        public void Update(Request item)
+        public async Task Update(Request item)
         {
             db.Requests.Update(item);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
     }
 }

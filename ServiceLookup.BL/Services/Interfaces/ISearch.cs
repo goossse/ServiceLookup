@@ -12,7 +12,12 @@ namespace ServiceLookup.BL.Services.Interfaces
         public Task<IEnumerable<ServiceDTO>> GetServices();
         public Task<ServiceDTO> GetService(int id);
         public IEnumerable<ServiceDTO> GetUsersServices(int userId); //async??
-        public Task<IEnumerable<ServiceDTO>> GetServicesByTitle(string text);
+        public Task<IEnumerable<ServiceDTO>> FindServices(string _text, int? _typeId, string _sortOrder, bool _isRatedOnly, int? _rateStart, int? _rateEnd, int _page = 1);
+        public Task<IEnumerable<ServiceDTO>> GetServicesByType(int typeId); 
         public Task<PriceDTO> GetPrice(int id);
+        public Task<IEnumerable<ServiceTypeDTO>> GetTypes();
+        public Task<ServiceTypeDTO> GetServiceType(int id);
+
+
     }
 }

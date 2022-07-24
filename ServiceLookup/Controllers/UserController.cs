@@ -51,7 +51,7 @@ namespace ServiceLookup.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUsersServices(int userId) //посмотреть ка происходит передача айди
+        public IActionResult GetUsersServices(int userId)
         {
 
             return View(searchService.GetUsersServices(userId));
@@ -60,7 +60,6 @@ namespace ServiceLookup.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            //сделать через автомаппер
             return View(await userService.GetUsers());
         }
 
@@ -70,11 +69,26 @@ namespace ServiceLookup.Controllers
             return View(await userService.GetUserAsync(id));
         }
 
-        public async Task<IActionResult> SearchByTitle(string text)
+
+        [HttpGet]
+        public async Task<IActionResult> FindServices(string Order, int? TypeId = null, string TextSearch = "", bool IsRatedOnly = false, int? RateStart = null, int? RateEnd = null)
         {
-            return View(await searchService.GetServicesByTitle(text));
+            SearchViewModel searchVM = new SearchViewModel()
+            {
+                Types = await searchService.GetTypes(),
+                TypeId = TypeId,
+                TextSearch = TextSearch,
+                IsRatedOnly = IsRatedOnly,
+                RateStart = RateStart,
+                RateEnd = RateEnd,
+                Order = Order,
+                services = await searchService.FindServices(TextSearch, TypeId, Order, IsRatedOnly, RateStart, RateEnd)
+            };
+            return View(searchVM);
         }
-        //Впихнуть в клиент если поделю на 2 контроллера
+
+
+        
 /*        public IActionResult ChangePassword()
         {
             string temp = userManager.GetUserId(User);
@@ -82,4 +96,3 @@ namespace ServiceLookup.Controllers
         }*/
     }
 }
-// сделать онмодел креэйтин (не надо??)

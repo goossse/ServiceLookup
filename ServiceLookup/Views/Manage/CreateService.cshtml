@@ -1,12 +1,20 @@
 ﻿@using ServiceLookup.Models.ManageVM
 
-@model ServiceViewModel
+@model CreateServiceViewModel
 
 <h4 class="text-center px-0">Створення послуги</h4>
 <div class="container py-5 bg-light">
     <form method="post" asp-controller="Manage" asp-action="CreateService" enctype="multipart/form-data">
         <div class="row">
             <div class="col-12 col-md-8">
+                <label asp-for="TypeId" class="form-label">Оберіть тип послуги</label>
+                <select asp-for="TypeId" class="form-select" aria-label="Type select">
+                    <option selected>Оберіть категорію</option>
+                    @foreach (var type in Model.Types)
+                    {
+                        <option value="@type.Id">@type.Name</option>
+                    }
+                </select>
                 <div class="col-auto">
                     <label asp-for="Title" class="form-label">Назва послуги</label>
                     <input asp-for="Title" type="text" class="form-control" placeholder="Ім'я" aria-label="Title">
@@ -25,7 +33,7 @@
                                aria-label="PriceValue">
                     </div>
                     <div class="col-auto">
-                        <label asp-for="Price.Value" class="form-label">Ціна</label>
+                        <label asp-for="Price.Currency" class="form-label">Ціна</label>
                         <select asp-for="Price.Currency" class="form-select" aria-label="Currency select">
                             <option selected>Оберіть валюту</option>
                             <option value="Гривна">Гривна</option>
