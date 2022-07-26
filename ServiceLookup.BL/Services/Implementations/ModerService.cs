@@ -34,5 +34,11 @@ namespace ServiceLookup.BL.Services.Implementations
             unitOfWork.ServiceTypes.Create(serviceType);
             return true;
         }
+
+        public void AddCondition(ConditionDTO _condition)
+        {
+            Condition condition = mapper.Map<Condition>(_condition);
+            unitOfWork.Conditions.Create(condition);
+        }
     }
 }

@@ -48,8 +48,7 @@ namespace ServiceLookup.BL.Services.Implementations
 
         public async Task<IEnumerable<ServiceDTO>> MyServices(int userId)
         {
-            return mapper.Map<IEnumerable<ServiceDTO>>(await unitOfWork.Services.GetByUser(userId));
-
+            return mapper.Map<IEnumerable<ServiceDTO>>(await unitOfWork.Services.GetIncludingFiltred(s => s.UserId == userId, s => s.Price));
         }
 
         public async Task<IEnumerable<RequestDTO>> MyRequests(int userId)

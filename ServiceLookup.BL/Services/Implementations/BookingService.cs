@@ -44,5 +44,11 @@ namespace ServiceLookup.BL.Services.Implementations
         {
             await unitOfWork.Requests.Remove(id);
         }
+
+/*        public async Task<ReviewDTO> GetCriteriedReview(int serviceId)
+        {
+            Service service = await unitOfWork.Services.FindById(serviceId);
+            string Criterias = (await searchService.GetServiceType(service.TypeId ??= 1)).Criterias;
+        }*/
     }
 }

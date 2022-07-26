@@ -10,5 +10,7 @@ namespace ServiceLookup.BL.Services.Interfaces
     public interface IModer
     {
         public bool AddServiceType(ServiceTypeDTO serviceType);
+        public void AddCondition(ConditionDTO _condition);
+
     }
 }

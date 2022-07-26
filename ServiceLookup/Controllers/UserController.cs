@@ -42,7 +42,7 @@ namespace ServiceLookup.Controllers
         [HttpGet]
         public async Task<IActionResult> GetService(int id)
         {
-            int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
+            int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;//exception if unregist user
             ServiceViewModel service = mapper.Map<ServiceViewModel>(await searchService.GetService(id));
             if (service.UserId == userId)
             {

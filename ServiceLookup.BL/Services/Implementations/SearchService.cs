@@ -11,6 +11,7 @@ using ServiceLookup.DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ namespace ServiceLookup.BL.Services.Implementations
 
         public async Task<IEnumerable<ServiceDTO>> GetServices()
         {
-            var list = mapper.Map<List<ServiceDTO>>(await unitOfWork.Services.Get());
+            var list = mapper.Map<List<ServiceDTO>>(await unitOfWork.Services.GetIncluding(s => s.Price));
             return list;
         }
 
@@ -44,14 +45,46 @@ namespace ServiceLookup.BL.Services.Implementations
 
         public IEnumerable<ServiceDTO> GetUsersServices(int userId)
         {
-            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetByUser(userId));
+            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetIncludingFiltred(s => s.UserId == userId, s => s.Price));
             return list;
         }
 
         public async Task<PagedListDTO<ServiceDTO>> FindServices(string _text, int? _typeId, string _sortOrder,
-            bool _isRatedOnly, int? _rateStart, int? _rateEnd, int _page = 1, int _pageSize = 15)
+            bool _isRatedOnly, int? _rateStart = 10, int? _rateEnd = 1, int _page = 1, int _pageSize = 15)
         {
-            PagedList<Service> pagedList = await unitOfWork.Services.FindByProperties(_text, _typeId, _sortOrder, _isRatedOnly, _rateStart, _rateEnd, _page, _pageSize);
+
+            List<Expression<Func<Service, bool>>> filtersExps = new List<Expression<Func<Service, bool>>>();
+            if (_typeId != null)
+            {
+                filtersExps.Add(s => s.TypeId == _typeId);
+            }
+            if (_isRatedOnly)
+            {
+                filtersExps.Add(s => s.AverageRate != null && s.AverageRate > _rateStart && s.AverageRate < _rateEnd);
+            }
+            if (!String.IsNullOrEmpty(_text))
+            {
+                filtersExps.Add(s => s.Title!.Contains(_text));
+            }
+            Expression<Func<Service, object>> orderExp = (s) => s.DateOfCreating;
+            bool orderDesc = true;
+            switch (_sortOrder)
+            {
+                case "Найстаріші":
+                    orderExp = (s) => s.DateOfCreating;
+                    orderDesc = false; break;
+                case "Ім'я":
+                    orderExp = (s) => s.Title;
+                    orderDesc = false; break;
+                case "Ім'я (у зворотньому)":
+                    orderExp = (s) => s.Title; break;
+                case "Рейтинг":
+                    orderExp = (s) => s.AverageRate;
+                    orderDesc = false; break;
+                case "Рейтинг (у зворотньому)":
+                    orderExp = (s) => s.AverageRate; break;
+            }
+            PagedList<Service> pagedList = await unitOfWork.Services.GetIncludingFiltred(filtersExps, orderExp, orderDesc, _page, _pageSize, s => s.Price);
             PagedListDTO<ServiceDTO> pagedListDTO = new PagedListDTO<ServiceDTO>() { Items = mapper.Map<List<ServiceDTO>>(pagedList.Items), Count = pagedList.Count };
             return pagedListDTO;
         }
@@ -74,9 +107,9 @@ namespace ServiceLookup.BL.Services.Implementations
             return serviceType;
         }
 
-        public async Task<IEnumerable<ServiceDTO>> GetServicesByType(int typeId)
+        public IEnumerable<ServiceDTO> GetServicesByType(int typeId)
         {
-            var list = mapper.Map<List<ServiceDTO>>(await unitOfWork.Services.GetByType(typeId));
+            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetIncludingFiltred(s => s.TypeId == typeId, s => s.Price));
             return list;
         }
 

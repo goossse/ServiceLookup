@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ServiceLookup.DAL.Entity.PagedList;
+using System.Linq.Expressions;
 
 namespace ServiceLookup.DAL.Repositories
 {
@@ -25,67 +26,65 @@ namespace ServiceLookup.DAL.Repositories
             db.SaveChanges();
         }
 
+        public async Task<IEnumerable<Service>> Get()
+        {
+            return await db.Services.AsNoTracking().ToListAsync();
+        }
+
         public async Task<Service> FindById(int id)
         {
             return await db.Services.AsNoTracking().Include(s => s.Price)
                                 .Include(s => s.ServiceType).FirstAsync(s => s.Id == id);
         }
 
-
-
-        public async Task<PagedList<Service>> FindByProperties(string searchText, int? typeId = null, string sortOrder = "Самые новые",
-            bool IsRatedOnly = false, int? rateStart = 0, int? rateEnd = 10, int page = 1, int pageSize = 12, int? userId = null)
+        public IQueryable<Service> Include(params Expression<Func<Service, object>>[] Properties)
         {
-            IQueryable<Service> query = db.Services.Include(s => s.Price);
-            //Filtration
-            if (typeId != null) { query = query.Where(s => s.TypeId == typeId); }
-            if (IsRatedOnly) 
+            IQueryable<Service> query = db.Services.AsNoTracking();
+            return Properties
+                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+        }
+
+        //For includes
+        public async Task<IEnumerable<Service>> GetIncluding(params Expression<Func<Service, object>>[] Properties)
+        {
+            return await Include(Properties).ToListAsync();
+        }
+
+        //For PagedList of filters, sorting, and many includes
+        public async Task<PagedList<Service>> GetIncludingFiltred(List<Expression<Func<Service, bool>>> Filters, Expression<Func<Service, object>> Order, bool IsDesc,
+             int page = 1, int pageSize = 15, params Expression<Func<Service, object>>[] Properties)
+        {
+            IQueryable<Service> query = Include(Properties);//Нужен ли asnotracking???
+            foreach (var filter in Filters)
             {
-                query = query.Where(s => s.AverageRate != null);
-                query = query.Where(s => s.AverageRate > rateStart);
-                query = query.Where(s => s.AverageRate < rateEnd);
+                query = query.Where(filter);
             }
-            if (!String.IsNullOrEmpty(searchText)) { query = query.Where(s => s.Title!.Contains(searchText)); }
-            //Sorting
-            switch (sortOrder)
+            if (IsDesc)
             {
-                case "Найновіші":
-                    query = query.OrderByDescending(s => s.DateOfCreating); break;
-                case "Найстаріші":
-                    query = query.OrderBy(s => s.DateOfCreating); break;
-                case "Ім'я":
-                    query = query.OrderBy(s => s.Title); break;
-                case "Ім'я (у зворотньому)":
-                    query = query.OrderByDescending(s => s.Title); break;
-                case "Рейтинг":
-                    query = query.OrderBy(s => s.AverageRate); break;
-                case "Рейтинг (у зворотньому)":
-                    query = query.OrderByDescending(s => s.AverageRate); break;
-            }     
-            /*return await query.ToListAsync();*/
+                query = query.OrderByDescending(Order);
+            }
+            else
+            {
+                query = query.OrderBy(Order);
+            }
             return await GetPagedAsync(query, page, pageSize);
+        }
+
+        //For one filter and many includes
+        public async Task<IEnumerable<Service>> GetIncludingFiltred(Expression<Func<Service, bool>> Filter,
+            params Expression<Func<Service, object>>[] Properties)
+        {
+            IQueryable<Service> query = Include(Properties);//Нужен ли asnotracking???
+            return await query.Where(Filter).ToListAsync();
         }
 
         public async Task<PagedList<Service>> GetPagedAsync(IQueryable<Service> query, int page, int pageSize = 15)
         {
-            return new PagedList<Service>() { Count = query.Count(),
-                Items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync()   };
-        }
-
-        public async Task<IEnumerable<Service>> Get()
-        {
-            return await db.Services.AsNoTracking().Include(s => s.Price)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Service>> GetByUser(int userId)
-        {
-            return await db.Services.AsNoTracking().Include(s => s.Price).Where(s => s.UserId == userId).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Service>> GetByType(int typeId)
-        {
-            return await db.Services.AsNoTracking().Include(s => s.Price).Where(s => s.TypeId == typeId).ToListAsync();
+            return new PagedList<Service>()
+            {
+                Count = query.Count(),
+                Items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync()
+            };
         }
 
         public async Task Remove(int id)

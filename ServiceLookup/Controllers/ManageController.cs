@@ -81,7 +81,7 @@ namespace ServiceLookup.Controllers
         public async Task<IActionResult> MyServices()
         {
             int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
-            return View(await serviceService.MyServices(userId));
+            return View( await serviceService.MyServices(userId));
         }
 
         [HttpGet]

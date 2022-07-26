@@ -31,9 +31,26 @@ namespace ServiceLookup.DAL.Repositories
         public async Task<Request> FindById(int id)
         {
             return await db.Requests.AsNoTracking().Include(r => r.Service)
-                /*.Include(r=>Condition)*/
+                /*.Include(r => r.ConditionId)*/
                 .Include(r => r.Price).FirstAsync(r => r.Id == id);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public async Task<IEnumerable<Request>> Get()
         {
@@ -50,6 +67,8 @@ namespace ServiceLookup.DAL.Repositories
                 .Where(r => r.Service!.UserId == id /*&& r.ConditionId == conditionId*/).ToListAsync();
             return requests;
         }
+
+
 
         public async Task Remove(int id)
         {

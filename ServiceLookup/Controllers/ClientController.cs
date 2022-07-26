@@ -77,7 +77,7 @@ namespace ServiceLookup.Controllers
         {
             // Получаем Услугу и Цену
             ServiceDTO service = await searchService.GetService(id);
-            PriceDTO price = await searchService.GetPrice(service.PriceId);
+            PriceDTO price = await searchService.GetPrice(service.PriceId);// need include!
             // Добавляем данные в ViewModel
             BookingViewModel bookingVM = new BookingViewModel()
             {
@@ -118,7 +118,7 @@ namespace ServiceLookup.Controllers
         {
             int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
             IEnumerable<RequestDTO> requests = await bookingService.GetRequests(userId);
-            List<MyRequestsViewModel> list = new List<MyRequestsViewModel>();
+            List<MyRequestsViewModel> list = new List<MyRequestsViewModel>();//need include!
             foreach (RequestDTO request in requests)
             {
                 ServiceDTO service = await searchService.GetService(request.ServiceId);
@@ -150,11 +150,11 @@ namespace ServiceLookup.Controllers
         public async Task<IActionResult> CreateReview(int id)
         {
             ServiceDTO service = await searchService.GetService(id);
-            string Criterias = await searchService.GetServiceType(service.TypeId)
+            string Criterias = (await searchService.GetServiceType(service.TypeId??=1)).Criterias;
             ReviewViewModel reviewVM = new ReviewViewModel()
             {
 
-            }
+            };
         }*/
     }
 }
