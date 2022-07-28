@@ -7,17 +7,22 @@
     <form method="post" asp-controller="Manage" asp-action="CreateService" enctype="multipart/form-data">
         <div class="row">
             <div class="col-12 col-md-8">
-                <label asp-for="TypeId" class="form-label">Оберіть тип послуги</label>
-                <select asp-for="TypeId" class="form-select" aria-label="Type select">
-                    <option selected>Оберіть категорію</option>
-                    @foreach (var type in Model.Types)
-                    {
-                        <option value="@type.Id">@type.Name</option>
-                    }
-                </select>
+                <div class="mb-3">
+                    <label asp-for="TypeId" class="form-label">Оберіть тип послуги</label>
+                    <select asp-for="TypeId" class="form-select" aria-label="Type select" required>
+                        <option selected disabled value="">Оберіть категорію</option>
+                        @for (int i = 0; i < Model!.Types!.Count(); i++)
+                        {
+                            <option value="@Model.Types[i].Id">@Model!.Types![i].Name</option>
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        Не забудьте обрати тип послуги :)
+                    </div>
+                </div>
                 <div class="col-auto">
                     <label asp-for="Title" class="form-label">Назва послуги</label>
-                    <input asp-for="Title" type="text" class="form-control" placeholder="Ім'я" aria-label="Title">
+                    <input asp-for="Title" type="text" class="form-control" placeholder="Ім'я" aria-label="Title" required>
                 </div>
 
                 <div class="col-auto">
@@ -28,13 +33,13 @@
 
                 <div class="row align-items-center mb-3">
                     <div class="col-auto">
-                        <label asp-for="Price.Value" class="form-label">Ціна</label>
-                        <input asp-for="Price.Value" type="number" class="form-control" placeholder="Введіть ціну"
+                        <label asp-for="Price!.Value!" class="form-label">Ціна</label>
+                        <input asp-for="Price!.Value!" type="number" class="form-control" placeholder="Введіть ціну"
                                aria-label="PriceValue">
                     </div>
                     <div class="col-auto">
-                        <label asp-for="Price.Currency" class="form-label">Ціна</label>
-                        <select asp-for="Price.Currency" class="form-select" aria-label="Currency select">
+                        <label asp-for="Price!.Currency!" class="form-label">Ціна</label>
+                        <select asp-for="Price!.Currency!" class="form-select" aria-label="Currency select">
                             <option selected>Оберіть валюту</option>
                             <option value="Гривна">Гривна</option>
                             <option value="Доллар">Доллар</option>

@@ -47,7 +47,9 @@ namespace ServiceLookup.Controllers
             ServiceDTO service = await searchService.GetService(id);
             ServiceViewModel serviceVM = new ServiceViewModel()
             {
-                Title = service.Title, Info = service.Info, Price = service.Price
+                Title = service.Title,
+                Info = service.Info,
+                Price = service.Price
             };
             return View(serviceVM);
         }
@@ -83,28 +85,40 @@ namespace ServiceLookup.Controllers
         public async Task<IActionResult> MyServices()
         {
             int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
-            return View( await serviceService.MyServices(userId));
+            return View(await serviceService.MyServices(userId));
         }
 
         [HttpGet]
         public async Task<IActionResult> CreateService()
         {
             var types = await searchService.GetTypes();
-            CreateServiceViewModel serviceVM = new CreateServiceViewModel() { Types = types };
+            CreateServiceViewModel serviceVM = new CreateServiceViewModel() { Types = types.ToList() };
             return View(serviceVM);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateService(CreateServiceViewModel _service)
         {
-            var userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
-            ServiceDTO serv = new ServiceDTO() { Title = _service.Title, Info = _service.Info, UserId = userId, Price = _service.Price,
-                DateOfCreating = DateTime.Now, ServiceTypeId = _service.TypeId 
-            };
-            if (_service.ImageFile != null)
-                serv.Image = SaveImage(_service.ImageFile);
-            bool check = serviceService.CreateService(serv);
-            return Redirect("~/Manage/MyServices");
+            if (ModelState.IsValid)
+            {
+                var userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
+                ServiceDTO serv = new ServiceDTO()
+                {
+                    Title = _service.Title,
+                    Info = _service.Info,
+                    UserId = userId,
+                    Price = _service.Price,
+                    DateOfCreating = DateTime.Now,
+                    ServiceTypeId = _service.TypeId
+                };
+                if (_service.ImageFile != null)
+                    serv.Image = SaveImage(_service.ImageFile);
+                bool check = serviceService.CreateService(serv);
+                return Redirect("~/Manage/MyServices");
+            }
+            _service.Types = (await searchService.GetTypes()).ToList();
+            return View(_service);
+
         }
 
         [HttpGet]
@@ -113,7 +127,7 @@ namespace ServiceLookup.Controllers
             int pageSize = 5;
             int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
             PagedListDTO<RequestDTO> list = await serviceService.GetMyRequests(userId, Page, pageSize);
-            RequestsViewModel requests = new RequestsViewModel() { Requests = list.Items, pageViewModel = new PageViewModel(list.Count, Page, pageSize)  };
+            RequestsViewModel requests = new RequestsViewModel() { Requests = list.Items, pageViewModel = new PageViewModel(list.Count, Page, pageSize) };
             return View(requests);
         }
 
@@ -122,7 +136,7 @@ namespace ServiceLookup.Controllers
         {
             int pageSize = 5;
             int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
-            PagedListDTO<RequestDTO> list = await serviceService.GetMyBookings(userId, Page , pageSize);
+            PagedListDTO<RequestDTO> list = await serviceService.GetMyBookings(userId, Page, pageSize);
             RequestsViewModel requests = new RequestsViewModel() { Requests = list.Items, pageViewModel = new PageViewModel(list.Count, Page, pageSize) };
             return View(requests);
         }

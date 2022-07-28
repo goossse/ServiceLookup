@@ -45,7 +45,7 @@ namespace ServiceLookup.BL.Services.Implementations
 
         public IEnumerable<ServiceDTO> GetUsersServices(int userId)
         {
-            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetIncludingFiltred(s => s.UserId == userId, s => s.Price));
+            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetIncludingFiltred(s => s.UserId == userId, s => s.Price!));
             return list;
         }
 
@@ -74,17 +74,17 @@ namespace ServiceLookup.BL.Services.Implementations
                     orderExp = (s) => s.DateOfCreating;
                     orderDesc = false; break;
                 case "Ім'я":
-                    orderExp = (s) => s.Title;
+                    orderExp = (s) => s.Title!;
                     orderDesc = false; break;
                 case "Ім'я (у зворотньому)":
-                    orderExp = (s) => s.Title; break;
+                    orderExp = (s) => s.Title!; break;
                 case "Рейтинг":
-                    orderExp = (s) => s.AverageRate;
+                    orderExp = (s) => s.AverageRate!;
                     orderDesc = false; break;
                 case "Рейтинг (у зворотньому)":
-                    orderExp = (s) => s.AverageRate; break;
+                    orderExp = (s) => s.AverageRate!; break;
             }
-            PagedList<Service> pagedList = await unitOfWork.Services.GetIncludingFiltred(filtersExps, orderExp, orderDesc, _page, _pageSize, s => s.Price);
+            PagedList<Service> pagedList = await unitOfWork.Services.GetIncludingFiltred(filtersExps, orderExp, orderDesc, _page, _pageSize, s => s.Price!);
             PagedListDTO<ServiceDTO> pagedListDTO = new PagedListDTO<ServiceDTO>() { Items = mapper.Map<List<ServiceDTO>>(pagedList.Items), Count = pagedList.Count };
             return pagedListDTO;
         }
@@ -109,7 +109,7 @@ namespace ServiceLookup.BL.Services.Implementations
 
         public IEnumerable<ServiceDTO> GetServicesByType(int typeId)
         {
-            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetIncludingFiltred(s => s.ServiceTypeId == typeId, s => s.Price));
+            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetIncludingFiltred(s => s.ServiceTypeId == typeId, s => s.Price!));
             return list;
         }
 
