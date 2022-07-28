@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ServiceLookup.DAL.Entity;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.DAL
 {
-    public class ApplicationDbContext : IdentityDbContext<User, Role, int>
+    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

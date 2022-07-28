@@ -11,5 +11,7 @@ namespace ServiceLookup.BL.DTO
         public int Id { get; set; }
         public string? Title { get; set; }
         public int Rate { get; set; }
+        public int ReviewId { get; set; }
+        public ReviewDTO? Review { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.BL.Services.Interfaces
 {
-    internal interface IAccount
+    public interface IAccount
     {
     }
 }

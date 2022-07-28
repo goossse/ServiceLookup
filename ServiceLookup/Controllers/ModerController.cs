@@ -12,10 +12,10 @@ namespace ServiceLookup.Controllers
         ILogger logger;
         IModer moderService;
 
-        public ModerController(ILogger<UserController> _logger, ApplicationDbContext db)
+        public ModerController(ILogger<ModerController> _logger, IModer _moderService)
         {
             logger = _logger;
-            moderService = new ModerService(db);
+            moderService = _moderService;
         }
 
         public IActionResult Index()

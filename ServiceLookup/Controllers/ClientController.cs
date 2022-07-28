@@ -3,12 +3,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLookup.BL.DTO;
+using ServiceLookup.BL.DTO.PagedList;
 using ServiceLookup.BL.Services.Implementations;
 using ServiceLookup.BL.Services.Interfaces;
 using ServiceLookup.DAL;
 using ServiceLookup.DAL.Entity;
+using ServiceLookup.DAL.Entity.PagedList;
 using ServiceLookup.Mapper;
+using ServiceLookup.Models;
 using ServiceLookup.Models.ClientVM;
+using ServiceLookup.Models.ManageVM;
 using ServiceLookup.Models.UserVM;
 
 namespace ServiceLookup.Controllers
@@ -22,12 +26,12 @@ namespace ServiceLookup.Controllers
         ILogger logger;
         UserManager<User> userManager;
         IMapper mapper;
-        public ClientController(ILogger<UserController> _logger, ApplicationDbContext db, UserManager<User> _userManager)
+        public ClientController(ILogger<UserController> _logger, UserManager<User> _userManager, IBooking _bookingService, IProfile _profileService, ISearch _searchService)
         {
             logger = _logger;
-            profileService = new ProfileService(db);//?? не должны ли мы получить в конструкторе реализацию??
-            bookingService = new BookingService(db);
-            searchService = new SearchService(db);
+            profileService = _profileService;
+            bookingService = _bookingService;
+            searchService = _searchService;
             userManager = _userManager;
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -107,36 +111,20 @@ namespace ServiceLookup.Controllers
                 StartOfBooking = DateTime.Parse(reqVM.DateOfBooking.ToShortDateString() + " " + reqVM.StartOfBooking.ToShortTimeString()),
                 EndOfBooking = DateTime.Parse(reqVM.DateOfBooking.ToShortDateString() + " " + reqVM.EndOfBooking.ToShortTimeString()),
                 DateTimeOfCreating = DateTime.Now,
-                /*ConditionId = 0,*/
+                ConditionId = 1,
                 Description = reqVM.Description
             };
             bookingService.ApplyRequest(request);
             return Redirect("/Client/MyRequests");
         }
         [HttpGet]
-        public async Task<IActionResult> MyRequests()
+        public async Task<IActionResult> MyRequests(int Page = 1)
         {
+            int pageSize = 5;
             int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
-            IEnumerable<RequestDTO> requests = await bookingService.GetRequests(userId);
-            List<MyRequestsViewModel> list = new List<MyRequestsViewModel>();//need include!
-            foreach (RequestDTO request in requests)
-            {
-                ServiceDTO service = await searchService.GetService(request.ServiceId);
-                MyRequestsViewModel temp = new MyRequestsViewModel()
-                {
-                    Id = request.Id,
-                    DateOfBooking = request.StartOfBooking.ToShortDateString(),
-                    StartOfBooking = request.StartOfBooking.ToShortTimeString(),
-                    EndOfBooking = request.EndOfBooking.ToShortTimeString(),
-                    Description = request.Description,
-                    Price = request.Price,
-                    ServiceId = service.Id,
-                    ServiceImage = service.Image,
-                    ServiceTitle = service.Title,
-                };
-                list.Add(temp);
-            }
-            return View(list);
+            PagedListDTO<RequestDTO> list = await bookingService.GetRequests(userId, Page, pageSize);
+            RequestsViewModel requests = new RequestsViewModel() { Requests = list.Items, pageViewModel = new PageViewModel(list.Count, Page, pageSize) };
+            return View(requests);
         }
 
         [HttpGet]
@@ -146,15 +134,37 @@ namespace ServiceLookup.Controllers
             return Redirect("/Client/MyRequests");
         }
 
-/*        [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> CreateReview(int id)
         {
-            ServiceDTO service = await searchService.GetService(id);
-            string Criterias = (await searchService.GetServiceType(service.TypeId??=1)).Criterias;
-            ReviewViewModel reviewVM = new ReviewViewModel()
-            {
+            RequestDTO request = await bookingService.GetRequest(id);
+            List<string> criterias = await bookingService.GetCriteriesList(request.ServiceId);
+            ReviewViewModel reviewVM = new ReviewViewModel(){ Criterias = criterias,
+                ServiceId = request.ServiceId, Service = request.Service, RequestId = id};
+            return View(reviewVM);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateReview(ReviewViewModel reviewVM)
+        {
+            int userId = (await userManager.GetUserAsync(HttpContext.User)).Id;
+            List<ReviewCriteriaDTO> criterias = new List<ReviewCriteriaDTO>();
+            for (int i = 0; i < reviewVM.Criterias.Count; i++)
+            {
+                criterias.Add(new ReviewCriteriaDTO() { Title = reviewVM.Criterias[i], Rate = reviewVM.Rates![i] });
+            }
+            ReviewDTO review = new ReviewDTO()
+            {
+                Criterias = criterias,
+                Info = reviewVM.Text,
+                ServiceId = reviewVM.ServiceId,
+                UserId = userId
             };
-        }*/
+            await bookingService.CreateReview(review);
+            await bookingService.MarkRequestCompleted(reviewVM.RequestId);
+            return Redirect("/Client/MyReviews");
+        }
+
+        /*[HttpGet]*/
     }
 }

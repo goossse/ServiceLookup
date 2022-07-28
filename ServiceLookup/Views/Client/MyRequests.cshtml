@@ -1,10 +1,12 @@
-﻿@using ServiceLookup.Models.ClientVM
+﻿@using ServiceLookup.BL.DTO
+@using ServiceLookup.Models.ClientVM
+@using ServiceLookup.Models.ManageVM
 
-@model IEnumerable<MyRequestsViewModel>
+@model RequestsViewModel
 
 <h4 class="text-center px-0">Мої запити на бронювання</h4>
 <div class="container py-5 bg-light g-3">
-    @foreach (MyRequestsViewModel request in Model)
+    @foreach (RequestDTO request in Model.Requests)
     {
         <div class="row g-2">
             <div class="card bg py-2 g-3 px-2 bg-white">
@@ -12,7 +14,7 @@
                     <div class="col-12 col-lg-9 px-5 py-2">
                         <dl class="row text">
                             <dd class="col-6">
-                                <h5>Дата бронювання: <span class="badge bg-secondary">@request.DateOfBooking</span></h5>
+                                <h5>Дата бронювання: <span class="badge bg-secondary">@request.DateTimeOfCreating.ToShortDateString()</span></h5>
                             </dd>
                             <dd class="col-6">
                                 <h5>Цiна: <span class="badge bg-secondary">100 грн.</span></h5>
@@ -23,10 +25,10 @@
                                 <h5>Час бронювання:</h5>
                             </dd>
                             <dd class="col-auto">
-                                <h5>з <span class="badge bg-secondary">@request.EndOfBooking</span></h5>
+                                <h5>з <span class="badge bg-secondary">@request.StartOfBooking.ToShortTimeString()</span></h5>
                             </dd>
                             <dd class="col-auto">
-                                <h5>до <span class="badge bg-secondary">@request.EndOfBooking</span></h5>
+                                <h5>до <span class="badge bg-secondary">@request.EndOfBooking.ToShortTimeString()</span></h5>
                             </dd>
                         </dl>
                         <dl class="row">
@@ -40,33 +42,85 @@
                             </dd>
                         </dl>
                         <div class="row">
-                            <div class="d-grid col-6">
+                            <div class="d-grid col-4">
                                 <a asp-controller="Client" asp-action="DeleteRequest" asp-route-id="@request.Id" class="btn btn-secondary btn-md">Видалити</a>
                             </div>
-                            <div class="col-6">
-                                <h5>Статус заявки: <span class="badge bg-success">Підтверджено майстером</span></h5>
+                            <div class="d-grid col-8">
+
+                                @if (request.ConditionId == 1)
+                                {
+                                    <div class="col-4">
+                                        <h5>Статус заявки: <span class="badge bg-warning">@request.Condition!.Title</span></h5>
+                                    </div>
+                                }
+                                else if (request.ConditionId == 2)
+                                {
+                                    <div class="col-4">
+                                        <h5>Статус заявки: <span class="badge bg-danger">@request.Condition!.Title</span></h5>
+                                    </div>
+
+                                }
+                                else if (request.ConditionId == 3)
+                                {
+                                    <div class="d-grid col-4">
+                                        <a asp-controller="Client" asp-action="CreateReview" asp-route-id="@request.Id" class="btn btn-secondary btn-md">Додати відгук</a>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>Статус заявки: <span class="badge bg-success">@request.Condition!.Title</span></h5>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-4">
+                                        <h5>Статус заявки: <span class="badge bg-secondary">@request.Condition!.Title</span></h5>
+                                    </div>
+                                }
+
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-3 py-2 px-2">
-                        @if (request.ServiceImage == null)
-                        {
-                            <img class="img-fluid img-thumbnail" src="~/images/massage5.jpg">
-                        }
-                        else
-                        {
-                            <img class="img-fluid img-thumbnail" src="@request.ServiceImage">
+                        <div class="col-12 col-lg-3 py-2 px-2">
+                            @if (request.Service!.Image == null)
+                            {
+                                <img class="img-fluid img-thumbnail" src="~/images/massage5.jpg">
+                            }
+                            else
+                            {
+                                <img class="img-fluid img-thumbnail" src="@request.Service.Image">
 
-                        }
-                        <h4 class="text-black text-center">@request.ServiceTitle</h4>
-                        <div class="d-grid">
-                            <a asp-controller="User" asp-action="GetService" asp-route-id="@request.ServiceId" class="btn btn-outline-success">Переглянути послугу</a>
+                            }
+                            <h4 class="text-black text-center">@request.Service.Title</h4>
+                            <div class="d-grid">
+                                <a asp-controller="User" asp-action="GetService" asp-route-id="@request.ServiceId" class="btn btn-outline-success">Переглянути послугу</a>
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     }
-
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            @if (Model.pageViewModel!.HasPrev)
+            {
+                <li class="page-item">
+                    <a class="btn" asp-controller="Client" asp-action="MyRequests" asp-route-Page="@(Model.pageViewModel.PageNumber-1)" tabindex="-1">Попередні</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled"><a class="page-link" tabindex="-1">Попередні</a></li>
+            }
+            @if (Model.pageViewModel.HasNext)
+            {
+                <li class="page-item">
+                    <a class="btn" asp-controller="Client" asp-action="MyRequests" asp-route-Page="@(Model.pageViewModel.PageNumber+1)" tabindex="-1">Наступні</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Наступні</a></li>
+            }
+        </ul>
+    </nav>
 </div>

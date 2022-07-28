@@ -19,12 +19,12 @@ namespace ServiceLookup.Controllers
         IUser userService;
         IMapper mapper;
         private readonly UserManager<User> userManager;
-        public UserController(ILogger<UserController> _logger, ApplicationDbContext db, UserManager<User> _userManager)
+        public UserController(ILogger<UserController> _logger, UserManager<User> _userManager, IUser _userService, ISearch _searchService)
         {
-            userManager = _userManager;
             logger = _logger;
-            searchService = new SearchService(db);//?? не должны ли мы получить в конструкторе реализацию??
-            userService = new UserService(db);
+            userManager = _userManager;
+            searchService = _searchService;
+            userService = _userService;
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapperView());

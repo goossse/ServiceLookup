@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.BL.Services.Implementations
 {
-    internal class AdminService : IAdmin
+    public class AdminService : IAdmin
     {
     }
 }

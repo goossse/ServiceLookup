@@ -18,5 +18,7 @@ namespace ServiceLookup.DAL.Entity
         [MaxLength(10)]
         [MinLength(1)]
         public int Rate { get; set; }
+        public int ReviewId { get; set; }
+        public Review? Review { get; set; }
     }
 }

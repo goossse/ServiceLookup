@@ -33,8 +33,10 @@ namespace ServiceLookup.DAL.Repositories
 
         public async Task<Service> FindById(int id)
         {
-            return await db.Services.AsNoTracking().Include(s => s.Price)
-                                .Include(s => s.ServiceType).FirstAsync(s => s.Id == id);
+            return await db.Services.AsNoTracking().Include(s => s.Price).AsNoTracking()
+                .Include(s=>s.Reviews)
+                .Include(s=> s.User)
+                .Include(s => s.ServiceType).FirstAsync(s => s.Id == id);
         }
 
         public IQueryable<Service> Include(params Expression<Func<Service, object>>[] Properties)
@@ -74,7 +76,7 @@ namespace ServiceLookup.DAL.Repositories
         public async Task<IEnumerable<Service>> GetIncludingFiltred(Expression<Func<Service, bool>> Filter,
             params Expression<Func<Service, object>>[] Properties)
         {
-            IQueryable<Service> query = Include(Properties);//Нужен ли asnotracking???
+            IQueryable<Service> query = Include(Properties).AsNoTracking();//Нужен ли asnotracking???
             return await query.Where(Filter).ToListAsync();
         }
 
@@ -90,7 +92,7 @@ namespace ServiceLookup.DAL.Repositories
         public async Task Remove(int id)
         {
             var item = await db.Services.FindAsync(id);
-            db.Services.Remove(item);
+            db.Services.Remove(item!);
             await db.SaveChangesAsync();
         }
 

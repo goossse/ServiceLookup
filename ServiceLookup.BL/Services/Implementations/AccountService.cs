@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLookup.BL.Services.Implementations
 {
-    internal class AccountService :IAccount
+    public class AccountService :IAccount
     {
     }
 }

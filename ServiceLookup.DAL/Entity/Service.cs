@@ -25,7 +25,7 @@ namespace ServiceLookup.DAL.Entity
         public Price? Price { get; set; }
         public int? UserId { get; set; }
         public User? User { get; set; }
-        public int? TypeId { get; set; }
+        public int? ServiceTypeId { get; set; }
         public ServiceType? ServiceType { get; set; }
         public List<Request>? Requests { get; set; }
         public List<Review>? Reviews { get; set; }

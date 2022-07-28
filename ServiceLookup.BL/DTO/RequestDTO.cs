@@ -21,5 +21,6 @@ namespace ServiceLookup.BL.DTO
         public int ServiceId { get; set; }
         public ServiceDTO? Service { get; set; }
         public int ConditionId { get; set; }
+        public ConditionDTO? Condition { get; set; }
     }
 }

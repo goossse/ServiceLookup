@@ -16,8 +16,8 @@ namespace ServiceLookup.BL.DTO
         public string? Info { get; set; }
         public int UserId { get; set; }
         public UserDTO? User { get; set; }
-
         public int ServiceId { get; set; }
         public ServiceDTO? Service { get; set; }
+        public List<ReviewCriteriaDTO>? Criterias { get; set; }
     }
 }

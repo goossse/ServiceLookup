@@ -26,5 +26,6 @@ namespace ServiceLookup.DAL.Entity
         [Required]
         public int ServiceId { get; set; }
         public Service? Service { get; set; }
+        public List<ReviewCriteria>? Criterias { get; set; }
     }
 }

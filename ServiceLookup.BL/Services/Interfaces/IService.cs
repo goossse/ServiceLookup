@@ -1,4 +1,5 @@
 ﻿using ServiceLookup.BL.DTO;
+using ServiceLookup.BL.DTO.PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace ServiceLookup.BL.Services.Interfaces
         public Task<IEnumerable<ServiceDTO>> MyServices(int userId);
         public Task EditService(ServiceDTO _service);
         public Task DeleteService(int id);
-        public Task<IEnumerable<RequestDTO>> MyRequests(int userId);
-        public Task<IEnumerable<RequestDTO>> MyBookings(int userId);
+        public Task<PagedListDTO<RequestDTO>> GetMyRequests(int userId, int page, int pageSize);
+        public Task<PagedListDTO<RequestDTO>> GetMyBookings(int userId, int page, int pageSize);
 
         public Task<IEnumerable<ReviewDTO>> MyReviews(int userId);
 

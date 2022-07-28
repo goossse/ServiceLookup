@@ -9,7 +9,7 @@
             @await Html.PartialAsync("/Views/Client/Partial/CreateRequestPartial.cshtml", Model.Request)
         </div>
         <div class="col-12 col-md-4 mb-3">
-            <img class="img-fluid img-thumbnail" src="services\massage1.jpg">
+            <img class="img-fluid img-thumbnail" src="@Model.Service.Image">
             <div class="mb-3 py-3">
                 <h5 class="text-center">@Model.Service.Title</h5>
             </div>
@@ -28,3 +28,4 @@
             </dl>
         </div>
     </div>
+</div>

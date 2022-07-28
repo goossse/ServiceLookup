@@ -49,14 +49,14 @@ namespace ServiceLookup.BL.Services.Implementations
             return list;
         }
 
-        public async Task<PagedListDTO<ServiceDTO>> FindServices(string _text, int? _typeId, string _sortOrder,
+        public async Task<DTO.PagedList.PagedListDTO<ServiceDTO>> FindServices(string _text, int? _typeId, string _sortOrder,
             bool _isRatedOnly, int? _rateStart = 10, int? _rateEnd = 1, int _page = 1, int _pageSize = 15)
         {
 
             List<Expression<Func<Service, bool>>> filtersExps = new List<Expression<Func<Service, bool>>>();
             if (_typeId != null)
             {
-                filtersExps.Add(s => s.TypeId == _typeId);
+                filtersExps.Add(s => s.ServiceTypeId == _typeId);
             }
             if (_isRatedOnly)
             {
@@ -109,7 +109,7 @@ namespace ServiceLookup.BL.Services.Implementations
 
         public IEnumerable<ServiceDTO> GetServicesByType(int typeId)
         {
-            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetIncludingFiltred(s => s.TypeId == typeId, s => s.Price));
+            var list = mapper.Map<List<ServiceDTO>>(unitOfWork.Services.GetIncludingFiltred(s => s.ServiceTypeId == typeId, s => s.Price));
             return list;
         }
 

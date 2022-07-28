@@ -11,7 +11,7 @@
                     <div class="col-12 col-lg-9 px-5 py-2">
                         <dl class="row text">
                             <dd class="col-6">
-                                <h5>Дата бронювання: <span class="badge bg-secondary">@request.DateTimeOfCreating</span></h5>
+                                <h5>Дата бронювання: <span class="badge bg-secondary">@request.DateTimeOfCreating.ToShortDateString()</span></h5>
                             </dd>
                             <dd class="col-6">
                                 <h5>Цiна: <span class="badge bg-secondary">@request.Price.Value @request.Price.Currency</span></h5>
@@ -22,10 +22,10 @@
                                 <h5>Час бронювання:</h5>
                             </dd>
                             <dd class="col-auto">
-                                <h5>з <span class="badge bg-secondary">@request.StartOfBooking</span></h5>
+                                <h5>з <span class="badge bg-secondary">@request.StartOfBooking.ToShortTimeString()</span></h5>
                             </dd>
                             <dd class="col-auto">
-                                <h5>до <span class="badge bg-secondary">@request.EndOfBooking</span></h5>
+                                <h5>до <span class="badge bg-secondary">@request.EndOfBooking.ToShortTimeString()</span></h5>
                             </dd>
                         </dl>
                         <dl class="row">
@@ -39,15 +39,19 @@
                             </dd>
                         </dl>
                         <div class="row">
-                            <div class="d-grid col-3">
-                                <a asp-controller="Manage" asp-action="AcceptRequest" asp-route-id="@request.Id" class="btn btn-success btn-md">Підтвердити</a>
-                            </div>
-                            <div class="d-grid col-3">
-                                <a asp-controller="Manage" asp-action="RejectRequest" asp-route-id="@request.Id" class="btn btn-secondary btn-md">Відхилити</a>
-                            </div>
+                            @if (request.Condition!.Id == 1)
+                            {
+                                <div class="d-grid col-3">
+                                    <a asp-controller="Manage" asp-action="AcceptRequest" asp-route-id="@request.Id" class="btn btn-success btn-md">Підтвердити</a>
+                                </div>
+                                <div class="d-grid col-3">
+                                    <a asp-controller="Manage" asp-action="RejectRequest" asp-route-id="@request.Id" class="btn btn-secondary btn-md">Відхилити</a>
+                                </div>
+                            }
+
 
                             <div class="col-6">
-                                <h5>Статус заявки: <span class="badge bg-success">Очікування підтвердження</span></h5>
+                                <h5>Статус заявки: <span class="badge bg-success">@request.Condition.Title</span></h5>
                             </div>
                         </div>
                     </div>
@@ -71,5 +75,4 @@
             </div>
         </div>
     }
-
 </div>

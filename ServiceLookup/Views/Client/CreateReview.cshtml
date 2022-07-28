@@ -1,0 +1,61 @@
+﻿@using ServiceLookup.Models.ClientVM
+
+
+@model ReviewViewModel
+
+<h4 class="text-center py-3">Створення відгуку</h4>
+<div class="container py-5 bg-light">
+    <div class="row">
+        <div class="col-12 col-md-8">
+
+            <form method="post" asp-controller="Client" asp-action="CreateReview"
+                  enctype="multipart/form-data">
+                <input asp-for="ServiceId" type="hidden" />
+                <input asp-for="RequestId" type="hidden" />
+                @for (int i = 0; i < Model!.Criterias!.Count; i++)
+                {
+                    <div class="mb-3">
+                        <input asp-for="@Model.Criterias[i]" type="hidden" />
+                        <label asp-for="@Model!.Rates![i]" type="hidden">@Model.Criterias[i]</label>
+                        <input asp-for="@Model!.Rates![i]" type="range" class=" form-range" min="0" max="10">
+                    </div>
+                }
+                <div class="mb-3">
+                    <label asp-for="Text" class="form-label">Текст відгуку</label>
+                    <textarea asp-for="Text" class="form-control" rows="3"
+                              placeholder="Додаткова інформація про проведену послугу, скарги та пропозиції"></textarea>
+                </div>
+                <div class="row row-cols-2">
+                    <div class="d-grid gap-2 col-4">
+                        <button type="submit" class="btn btn-success">Створити відгук</button>
+                    </div>
+                    <div class="d-grid gap-2 col-4">
+                        <a asp-controller="User" asp-action="GetService" asp-route-id="@Model!.ServiceId"
+                           class="btn btn-outline-secondary">Скасувати</a>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+            <img class="img-fluid img-thumbnail" src="@Model.Service!.Image">
+            <div class="mb-3 py-3">
+                <h5 class="text-center">@Model.Service.Title</h5>
+            </div>
+
+            <dl class="row">
+                <h5 class="col-9 text-start">Цiна</h5>
+                @if (Model.Service.Price == null)
+                {
+                    <h5 class="col-3 text-end">Не вказана</h5>
+                }
+                else
+                {
+                    <h5 class="col-3 text-end">@Model.Service.Price.Value @Model.Service.Price.Currency</h5>
+
+                }
+            </dl>
+        </div>
+    </div>
+</div>
