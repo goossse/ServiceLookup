@@ -1,0 +1,7 @@
+﻿@using ServiceLookup.BL.DTO
+@using ServiceLookup.Models.ManageVM
+
+@model IEnumerable<ReviewDTO>
+
+<h4 class="text-center">Відгуки на послугу</h4>
+@await Html.PartialAsync("Partial/ReviewsPartial.cshtml", Model)

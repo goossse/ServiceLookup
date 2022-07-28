@@ -92,6 +92,12 @@ namespace ServiceLookup.Controllers
             return View(searchVM);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetServicesReviews(int id)
+        {
+            var list = await userService.GetServicesReviews(id);
+            return View(list);
+        }
 
         
 /*        public IActionResult ChangePassword()

@@ -41,30 +41,10 @@ namespace ServiceLookup.BL.Services.Implementations
             return user;
         }
 
-
-
-
-        /*        UserManager<User> userManager;
-
-                public UserService(UserManager<User> _userManager)
-                {
-                    userManager = _userManager;
-                }
-
-                public Task<User> GetUserAsync(int id) // удалить
-                {
-                    throw new NotImplementedException();
-                }
-
-                public IEnumerable<User> GetUsers()
-                {
-                    return userManager.Users.ToList();
-                }*/
-
-        /*        public async Task<User> GetUserAsync(int id)
-                {
-                    User user = await userManager.GetUserAsync(int id); //поменять ключ для юзера
-                    return user;
-                }*/
+        public async Task<IEnumerable<ReviewDTO>> GetServicesReviews(int id)
+        {
+            var list = await unitOfWork.Reviews.GetIncludingFiltred(r => r.ServiceId == id, r => r.Service!, r => r.Criterias!);
+            return mapper.Map<IEnumerable<ReviewDTO>>(list);
+        }
     }
 }

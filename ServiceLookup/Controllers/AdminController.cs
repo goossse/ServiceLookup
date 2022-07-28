@@ -1,22 +1,29 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLookup.BL.DTO;
+using ServiceLookup.BL.Services.Interfaces;
 using ServiceLookup.DAL.Entity;
 
 namespace ServiceLookup.Controllers
 {
+    [Authorize(Roles ="admin")]
     public class AdminController : Controller
     {
-/*        UserManager<User> userManager;
-        public AdminController(UserManager<User> _userManager)
+        IUser userService;
+        IAdmin adminService;
+        UserManager<User> userManager;
+        public AdminController(UserManager<User> _userManager, IUser _userService, IAdmin _adminService)
         {
             userManager = _userManager;
+            userService = _userService;
+            adminService = _adminService;
         }
 
         [HttpGet]
-        public IActionResult GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
-            return View(userManager.Users.ToList());
+            return View(await adminService.GetUsers());
         }
 
         [HttpPost]
@@ -34,7 +41,7 @@ namespace ServiceLookup.Controllers
         public async Task<IActionResult> EditUser(string id)
         {
             User user = await userManager.FindByIdAsync(id);
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }
@@ -46,7 +53,7 @@ namespace ServiceLookup.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await userManager.FindByIdAsync(_user.Id);
+                User user = await adminService.GetUser(_user.Id);
                 if (user != null)
                 {
                     user.Name = _user.Name;
@@ -66,6 +73,6 @@ namespace ServiceLookup.Controllers
                 }
             }
             return View(_user);
-        }*/
+        }
     }
 }
